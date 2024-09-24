@@ -1,9 +1,17 @@
 'use client';
 import Image from 'next/image';
 import { useBearStore } from './store/user';
+import { Button } from 'antd';
+import { http } from './utils/server';
 
 export default function Home() {
   const { bears, list, user, increase, reduce, addArr, popArr, changeUser, changeAge } = useBearStore();
+
+  const login = async () => {
+    console.log('3333333');
+    http.post('/login');
+  };
+
   return (
     <div>
       <h1 onClick={() => increase(1)}>加法</h1>
@@ -20,6 +28,8 @@ export default function Home() {
         })}
       <br />
       用户信息: {user.name} - {user.age}
+      <hr />
+      <Button onClick={() => login()}>网络请求</Button>
     </div>
   );
 }
