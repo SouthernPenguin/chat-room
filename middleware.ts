@@ -26,4 +26,4 @@ export async function middleware(request: NextRequest) {
 }
 
 // 受中间件影响的路由
-export const config = { matcher: ['/dashboard/:path*'] };
+export const config = { matcher: ['/', '/dashboard/:path*'] };
