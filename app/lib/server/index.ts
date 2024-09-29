@@ -7,7 +7,7 @@
 import axios from 'axios';
 import { message as AntMessage } from 'antd';
 import type { AxiosInstance, AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
-import { __TOKEN__ } from '../constant';
+import { __TOKEN__ } from '@/app/utils/constant';
 
 /* 服务器返回数据的的类型，根据接口文档确定 */
 export interface Result<T> {
