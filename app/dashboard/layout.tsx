@@ -1,22 +1,22 @@
-// import SideNav from '@/app/ui/dashboard/sidenav';
-
-import Link from 'next/link';
+import { ConfigProvider, theme } from 'antd';
+import SideNav from '../components/ui/dashboard/Sidenav';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  // const { defaultAlgorithm, darkAlgorithm } = theme;
+
+  // const [isDarkMode, setIsDarkMode] = useState(false);
+  // const toggleDarkMode = () => {
+  //   document.documentElement.classList.toggle('dark');
+  //   setIsDarkMode(!isDarkMode);
+  // };
+
   return (
-    <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-      <div className="w-full flex-none md:w-64">
-        <ul>
-          <li>
-            <Link href={'/dashboard/charRoom'}>charRoom</Link>
-          </li>
-          <li>
-            <Link href={'/dashboard/charRoom1'}>charRoom1</Link>
-          </li>
-        </ul>
-        {/* <SideNav /> */}
+    <div className="dark:bg-black flex h-screen md:overflow-hidden w-full">
+      <SideNav />
+      <div className="flex-initial w-full overflow-hidden">
+        {/* theme={{ algorithm: isDarkMode ? darkAlgorithm : defaultAlgorithm }} */}
+        <ConfigProvider> {children}</ConfigProvider>
       </div>
-      <div className="grow p-6 md:overflow-y-auto md:p-12">{children}</div>
     </div>
   );
 }

@@ -1,0 +1,13 @@
+#sideNav {
+  li {
+    position: relative;
+    &:hover {
+      color: white;
+      cursor: pointer;
+      .active {
+        display: block;
+      }
+    }
+  }
+}
+ 
