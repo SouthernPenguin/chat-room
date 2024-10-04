@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { login } from '@/app/lib/api/login';
 import { Button } from 'antd';
 import { signIn } from 'next-auth/react';
@@ -24,10 +24,11 @@ const SignInForm = props => {
     });
   };
 
-  if (props.session) {
-    router.push('/dashboard');
-    // Router.push('/dashboard');
-  }
+  useEffect(() => {
+    if (props.session) {
+      router.push('/dashboard');
+    }
+  }, [props.session]);
 
   return (
     <>
