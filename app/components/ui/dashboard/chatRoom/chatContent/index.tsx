@@ -25,7 +25,7 @@ const ChatContent: React.FC = () => {
             </div>
           </div>
 
-          <div style={{ height: 'calc(100% - 4rem - 3.5rem - 1.25rem - 0.5rem)' }} className="overflow-y-scroll ">
+          <div style={{ height: 'calc(100% - 4rem - 3.5rem - 1.25rem - 0.5rem)' }} className="overflow-y-scroll p-2">
             <div className="w-full">
               <div className="flex w-2/5">
                 <img
