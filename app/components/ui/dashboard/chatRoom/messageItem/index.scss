@@ -1,0 +1,10 @@
+#messageItem {
+  &:hover {
+    color: white;
+    cursor: pointer;
+    background-color: var(--mainBackground);
+    .active {
+      display: block;
+    }
+  }
+}

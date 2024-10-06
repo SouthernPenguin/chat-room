@@ -13,7 +13,7 @@ const SideNav: React.FC = () => {
         </div>
 
         <ul className="text-center text-zinc-500 text-xl mt-10" id="sideNav">
-          <Link href="/dashboard/charRoom">
+          <Link href="/dashboard/chatRoom">
             <li className="h-14  w-full flex items-center justify-center ">
               <div className="active h-full bg-mainForeground w-1 absolute left-0 hidden"></div>
               <MessageOutlined />
