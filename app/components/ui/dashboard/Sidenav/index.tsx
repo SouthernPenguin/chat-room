@@ -19,7 +19,7 @@ const SideNav: React.FC = () => {
               <MessageOutlined />
             </li>
           </Link>
-          <Link href="/dashboard/charRoom1">
+          <Link href="/dashboard/friend">
             <li className="h-14  w-full  flex items-center justify-center">
               <div className="active h-full bg-mainForeground w-1 absolute left-0 hidden"></div>
               <TeamOutlined />

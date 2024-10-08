@@ -1,0 +1,10 @@
+#friend-sideNav {
+  .notify {
+    line-height: 2.5rem;
+    &:hover {
+      cursor: pointer;
+      color: white;
+      background-color: var(--mainBackground);
+    }
+  }
+}

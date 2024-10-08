@@ -3,9 +3,12 @@ import './index.scss';
 import { Badge } from 'antd';
 import Link from 'next/link';
 
-const MessageItem = ({ id }) => {
+interface IProps {
+  id: number;
+}
+const MessageItem = (props: IProps) => {
   return (
-    <Link href={'/dashboard/chatRoom/' + id}>
+    <Link href={'/dashboard/chatRoom/' + props.id}>
       <div
         id="messageItem"
         className="w-full bg-white h-24 border-all rounded-md shadow-lg relative overflow-hidden dark:bg-black dark:text-white mb-3"
