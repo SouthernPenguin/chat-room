@@ -1,7 +1,10 @@
-#userItem{
-    &:hover {
+#userItem {
+  &:hover {
     color: white;
     cursor: pointer;
-    background-color: var(--mainBackground); 
+    background-color: var(--mainBackground);
+    .active {
+      display: block;
+    }
   }
 }

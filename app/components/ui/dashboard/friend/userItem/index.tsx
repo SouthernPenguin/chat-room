@@ -9,8 +9,9 @@ const UserItem = (props: IProps) => {
   return (
     <div
       id="userItem"
-      className="w-full bg-white h-20 border-all rounded-md shadow-lg relative overflow-hidden dark:bg-black dark:text-white mb-3 p-3 box-border w-80"
+      className="w-full bg-white h-20 border-all rounded-md shadow-lg relative overflow-hidden dark:bg-black dark:text-white mb-3 p-3 box-border "
     >
+      <div className="active h-full bg-mainForeground w-1 absolute left-0  top-0 hidden"></div>
       <div className="flex items-center  w-2/3">
         <img
           src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
