@@ -9,16 +9,16 @@ export async function middleware(request: NextRequest) {
       secret: 'your-secret-key',
       // cookieName: 'jwt', // next-auth.session-token
     });
-    // if (token?.token & (pathname === '/signin')) {
-    //   const r = new URL('/dashboard', request.url);
-    //   return NextResponse.redirect(r);
-    // }
 
     if (!token?.token && pathname !== '/signin') {
       const r = new URL('/signin', request.url);
       return NextResponse.redirect(r);
     }
 
+    if (token?.token && (pathname === '/signin' || pathname === '/')) {
+      const r = new URL('/dashboard', request.url);
+      return NextResponse.redirect(r);
+    }
     return NextResponse.next();
   } catch (error) {
     console.log(error, 'ss');
@@ -26,4 +26,4 @@ export async function middleware(request: NextRequest) {
 }
 
 // 受中间件影响的路由
-export const config = { matcher: ['/', '/dashboard/:path*'] };
+export const config = { matcher: ['/signin', '/', '/dashboard/:path*'] };

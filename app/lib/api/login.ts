@@ -8,9 +8,9 @@ import { http } from '../server';
 export interface ILogin {
   id: number;
   name: string;
-  nickname: string;
-  headerImg: string;
-  gender: number;
+  nickname: string | null;
+  headerImg: string | null;
+  gender: number | null;
 }
 export function login(data: { name: string; password: string }) {
   return http.post<{
@@ -19,6 +19,15 @@ export function login(data: { name: string; password: string }) {
   }>('/auth/login', data);
 }
 
-// export default {
-//   login,
-// };
+// 注册
+
+export function register(data: { name: string; password: string }) {
+  return http.post<{
+    userInfo: ILogin;
+  }>('/auth/register', data);
+}
+
+export default {
+  login,
+  register,
+};

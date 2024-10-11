@@ -1,13 +1,10 @@
 import React  from 'react';
 import SignInForm from './SignInForm';
-import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
-import { getServerSession } from 'next-auth';
 
-export default async function SignIn() {
-  const session = await getServerSession(authOptions);
+export default  function SignIn() {
   return (
     <>
-      <SignInForm session={JSON.stringify(session)} />
+      <SignInForm  />
     </>
   );
 }
