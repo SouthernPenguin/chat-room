@@ -8,6 +8,9 @@ import axios from 'axios';
 import { message as AntMessage } from 'antd';
 import type { AxiosInstance, AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 import { __TOKEN__ } from '@/app/utils/constant';
+import { allLocalStorageMove, getLocalStorageToken } from '@/app/utils';
+import { signOut } from 'next-auth/react';
+import { NextResponse } from 'next/server';
 
 /* 服务器返回数据的的类型，根据接口文档确定 */
 export interface Result<T> {
@@ -25,7 +28,7 @@ const service: AxiosInstance = axios.create({
 /* 请求拦截器 */
 service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem(__TOKEN__)}`;
+    config.headers.Authorization = `Bearer ${getLocalStorageToken()}`;
     return config;
   },
   (error: AxiosError) => {
@@ -60,8 +63,10 @@ service.interceptors.response.use(
         break;
       case 401:
         message = 'token 失效，请重新登录';
-        // loginUser.loginOut();
-        break;
+        AntMessage.error(message);
+        allLocalStorageMove();
+        signOut({ callbackUrl: '/signin' });
+        return Promise.reject(new Error('Token过期'));
       case 403:
         message = '拒绝访问';
         break;

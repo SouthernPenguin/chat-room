@@ -1,8 +1,10 @@
+'use client';
 import React from 'react';
 import { LogoutOutlined, MessageOutlined, SunOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import Link from 'next/link';
 import './index.scss';
+import { signOut } from 'next-auth/react';
 
 const SideNav: React.FC = () => {
   return (
@@ -33,7 +35,7 @@ const SideNav: React.FC = () => {
         <li className="text-xl mb-3">
           <SunOutlined />
         </li>
-        <li className="flex flex-col items-center">
+        <li className="flex flex-col items-center" onClick={() => signOut({ callbackUrl: '/signin' })}>
           <LogoutOutlined />
           <span className="text-xs">Sign Out</span>
         </li>
