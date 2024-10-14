@@ -1,14 +1,14 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import userJWT from '@/app/lib/api/login';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { ApiOutlined, KeyOutlined, LockFilled, UserOutlined } from '@ant-design/icons';
+import { ApiOutlined, KeyOutlined, LockFilled, UserOutlined, LoadingOutlined } from '@ant-design/icons';
 
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { message } from 'antd';
+import { message, Spin } from 'antd';
 import useUserStore from '@/app/store/user';
 import { setLocalStorage } from '@/app/utils';
 import { __REFRESH_TOKEN__ } from '@/app/utils/constant';
@@ -22,6 +22,7 @@ type FormData = z.infer<typeof schema>;
 
 const SignInForm = () => {
   const [flag, setFlag] = useState<boolean>(false); // 登录注册
+  const [loading, setLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false); // 是否显示密码
   const { setUserInfo, user } = useUserStore();
 
@@ -49,14 +50,14 @@ const SignInForm = () => {
         setFlag(false);
       }
     } else {
-      // 登录
+      try {
+        setLoading(true);
+        // 登录
+        const res = await userJWT.login({
+          name: data.name,
+          password: data.password,
+        });
 
-      const res = await userJWT.login({
-        name: data.name,
-        password: data.password,
-      });
-
-      if (res.success) {
         const signInResult = await signIn('credentials', {
           ...res.data.userInfo,
           token: res.data.token,
@@ -68,6 +69,10 @@ const SignInForm = () => {
           setLocalStorage(res.data.refreshToken, __REFRESH_TOKEN__);
           router.replace('/dashboard');
         }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -121,6 +126,8 @@ const SignInForm = () => {
           </div>
         </form>
       </div>
+
+      <Spin spinning={loading} fullscreen indicator={<LoadingOutlined spin />} />
     </div>
   );
 };
