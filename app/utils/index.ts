@@ -1,15 +1,15 @@
 import { __TOKEN__ } from './constant';
 
 /**
- * 模块名: 设置token
+ * 模块名: 设置缓存
  * @param string token
  */
-export const setLocalStorageToken = (token: string) => localStorage.setItem(__TOKEN__, token);
+export const setLocalStorage = (token: string, key: string = __TOKEN__) => localStorage.setItem(key, token);
 
 /**
- * 模块名:获取token
+ * 模块名:获取缓存
  */
-export const getLocalStorageToken = () => localStorage.getItem(__TOKEN__);
+export const getLocalStorage = (key: string = __TOKEN__) => localStorage.getItem(key);
 
 /**
  * 模块名: 移除token
@@ -19,4 +19,7 @@ export const moveLocalStorageToken = () => localStorage.removeItem(__TOKEN__);
 /**
  * 模块名:移除所有缓存
  */
-export const allLocalStorageMove = () => localStorage.clear();
+export const allLocalStorageMove = () => {
+  localStorage.clear();
+  sessionStorage.clear();
+};

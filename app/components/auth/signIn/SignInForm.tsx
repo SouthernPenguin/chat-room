@@ -10,7 +10,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { message } from 'antd';
 import useUserStore from '@/app/store/user';
-import { setLocalStorageToken } from '@/app/utils';
+import { setLocalStorage } from '@/app/utils';
+import { __REFRESH_TOKEN__ } from '@/app/utils/constant';
 
 // 定义验证模式
 const schema = z.object({
@@ -18,7 +19,6 @@ const schema = z.object({
   password: z.string().min(6, '请输入密码'),
 });
 type FormData = z.infer<typeof schema>;
- 
 
 const SignInForm = () => {
   const [flag, setFlag] = useState<boolean>(false); // 登录注册
@@ -50,10 +50,12 @@ const SignInForm = () => {
       }
     } else {
       // 登录
+
       const res = await userJWT.login({
         name: data.name,
         password: data.password,
       });
+
       if (res.success) {
         const signInResult = await signIn('credentials', {
           ...res.data.userInfo,
@@ -62,7 +64,8 @@ const SignInForm = () => {
         });
         if (signInResult?.ok) {
           setUserInfo(res.data.userInfo);
-          setLocalStorageToken(res.data.token);
+          setLocalStorage(res.data.token);
+          setLocalStorage(res.data.refreshToken, __REFRESH_TOKEN__);
           router.replace('/dashboard');
         }
       }

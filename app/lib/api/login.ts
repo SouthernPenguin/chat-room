@@ -16,6 +16,7 @@ export function login(data: { name: string; password: string }) {
   return http.post<{
     userInfo: ILogin;
     token: string;
+    refreshToken:string
   }>('/auth/login', data);
 }
 
