@@ -1,4 +1,5 @@
 import { __TOKEN__ } from './constant';
+import moment from 'moment';
 
 /**
  * 模块名: 设置缓存
@@ -22,4 +23,13 @@ export const moveLocalStorageToken = () => localStorage.removeItem(__TOKEN__);
 export const allLocalStorageMove = () => {
   localStorage.clear();
   sessionStorage.clear();
+};
+
+/**
+ * 转换为本地时间
+ * @param str 后端放回时间 【2024-09-17T14:28:24.437Z】
+ */
+export const toLocalTime = (str: string): string => {
+  const date = moment(str).local(); // 转换为本地时间
+  return date.format('YYYY-MM-DD HH:mm:ss');
 };

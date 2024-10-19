@@ -8,21 +8,25 @@ import React, { useState, useRef, useEffect } from 'react';
 import type { DraggableData, DraggableEvent } from 'react-draggable';
 import Draggable from 'react-draggable';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import ApplyAorFriends from './ApplyAorFriends';
 
 interface IProps {
   show: boolean;
   closeOpen: () => void;
 }
 
+interface ISelectItem {
+  show: boolean;
+  userInfo?: ILogin;
+}
+
 const FindFriend = (props: IProps) => {
   const [open, setOpen] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [bounds, setBounds] = useState({ left: 0, top: 0, bottom: 0, right: 0 });
-  const draggleRef = useRef<HTMLDivElement>(null);
-
+  const draggableRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [findFriendList, setFindFriendList] = useState<ILogin[]>([]);
-
   const [pages, setPages] = useState<{
     totalElements: number;
     totalPages: number;
@@ -32,6 +36,7 @@ const FindFriend = (props: IProps) => {
   });
   const [inputValue, setInputValue] = useState<string>('');
   const [page, setPage] = useState<number>(2);
+  const [selectItem, setSelectItem] = useState<ISelectItem>({ show: false });
 
   useEffect(() => {
     if (props.show) {
@@ -43,14 +48,14 @@ const FindFriend = (props: IProps) => {
     setOpen(true);
   };
 
-  const handleCancel = (e: React.MouseEvent<HTMLElement>) => {
+  const handleCancel = () => {
     setOpen(false);
     props.closeOpen();
   };
 
   const onStart = (_event: DraggableEvent, uiData: DraggableData) => {
     const { clientWidth, clientHeight } = window.document.documentElement;
-    const targetRect = draggleRef.current?.getBoundingClientRect();
+    const targetRect = draggableRef.current?.getBoundingClientRect();
     if (!targetRect) {
       return;
     }
@@ -62,9 +67,9 @@ const FindFriend = (props: IProps) => {
     });
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      getFindFriend();
+      await getFindFriend();
     }
   };
 
@@ -80,16 +85,15 @@ const FindFriend = (props: IProps) => {
         totalElements: res.data.totalElements,
         totalPages: res.data.totalPages,
       });
-    } catch (error) {
     } finally {
       setLoading(false);
     }
   };
 
-  const loadMoreData = () => {
+  const loadMoreData = async () => {
     setPage(page + 1);
     if (page <= pages.totalPages) {
-      getFindFriend({ page: page, limit: 10 });
+      await getFindFriend({ page: page, limit: 10 });
     }
   };
   return (
@@ -119,10 +123,10 @@ const FindFriend = (props: IProps) => {
           <Draggable
             disabled={disabled}
             bounds={bounds}
-            nodeRef={draggleRef}
+            nodeRef={draggableRef}
             onStart={(event, uiData) => onStart(event, uiData)}
           >
-            <div ref={draggleRef}>{modal}</div>
+            <div ref={draggableRef}>{modal}</div>
           </Draggable>
         )}
         footer={null}
@@ -161,7 +165,7 @@ const FindFriend = (props: IProps) => {
                     className="flex mb-3 items-center h-16  m-auto w-[97%] bg-white dark:bg-black  border-all rounded-md shadow-lg box-content p-2"
                   >
                     <div className="flex-none">
-                      <img src={item.headerImg} className="rounded-full  w-12 h-12 mr-3" />
+                      <img src={item.headerImg} className="rounded-full  w-12 h-12 mr-3" alt="" />
                     </div>
                     <div className="grow text-sm">
                       <p className="mb-2">
@@ -172,7 +176,7 @@ const FindFriend = (props: IProps) => {
                       </p>
                     </div>
                     <div className="flex-none mr-2">
-                      <Button>同意</Button>
+                      <Button onClick={() => setSelectItem({ show: true, userInfo: item })}>添加</Button>
                     </div>
                   </li>
                 );
@@ -181,6 +185,12 @@ const FindFriend = (props: IProps) => {
           </ul>
         )}
       </Modal>
+
+      <ApplyAorFriends
+        show={selectItem.show}
+        userInfo={selectItem.userInfo}
+        closeOpen={() => setSelectItem({ show: false })}
+      />
     </>
   );
 };
