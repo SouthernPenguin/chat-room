@@ -1,16 +1,30 @@
 'use client';
 import { Badge, Segmented } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RightOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import ListSearch from '@/app/components/public/ListSearch';
 import UserItem from '../userItem';
 import './index.scss';
 import useSocket from '@/app/store/socketStore';
+import { friendList } from '@/app/lib/api/friend';
+import { ILogin } from '@/app/lib/api/login';
 
 const SideNav = () => {
   const [segmentedValue, setSegmentedValue] = useState<string>('好友');
+  const [list, setList] = useState<ILogin[]>([]);
   const { awaitFriendsNumber } = useSocket();
+
+  useEffect(() => {
+    getFriendList();
+  }, []);
+
+  const getFriendList = async () => {
+    const res = await friendList();
+    if (res.success) {
+      setList([...res.data.content]);
+    }
+  };
 
   return (
     <div className="dark:bg-black bg-gray-50" id="friend-sideNav">
@@ -51,35 +65,20 @@ const SideNav = () => {
       <div style={{ height: 'calc(100% - 5rem - 4rem - 3.5rem)' }} className="overflow-y-scroll p-3 ">
         {segmentedValue === '好友' && (
           <div>
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
-            <UserItem userOrGroup={false} />
+            {list.length &&
+              list.map(item => {
+                return <UserItem userOrGroup={false} userItem={item} key={item.id} />;
+              })}
           </div>
         )}
+
         {segmentedValue === '群聊' && (
           <div>
-            <UserItem userOrGroup={true} />
-            <UserItem userOrGroup={true} />
-            <UserItem userOrGroup={true} />
-            <UserItem userOrGroup={true} />
-            <UserItem userOrGroup={true} />
+            {/*<UserItem userOrGroup={true} />*/}
+            {/*<UserItem userOrGroup={true} />*/}
+            {/*<UserItem userOrGroup={true} />*/}
+            {/*<UserItem userOrGroup={true} />*/}
+            {/*<UserItem userOrGroup={true} />*/}
           </div>
         )}
       </div>

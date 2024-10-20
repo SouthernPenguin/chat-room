@@ -1,8 +1,10 @@
 import React from 'react';
 import './index.scss';
+import { ILogin } from '@/app/lib/api/login';
 
 interface IProps {
   userOrGroup: boolean;
+  userItem: ILogin;
 }
 
 const UserItem = (props: IProps) => {
@@ -13,20 +15,24 @@ const UserItem = (props: IProps) => {
     >
       <div className="active h-full bg-mainForeground w-1 absolute left-0  top-0 hidden"></div>
       <div className="flex items-center  w-2/3">
-        <img
-          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-          className="rounded-full bg-gray-500 w-11 h-11 mr-3"
-        />
-
         {/* 群聊 */}
-        {props.userOrGroup && <div className="dark:text-white   text-ellipsis overflow-hidden ...">s</div>}
+        {props.userOrGroup && (
+          <>
+            {/*<img src={props.userItem.headerImg} className="rounded-full bg-gray-500 w-11 h-11 mr-3" />*/}
+            <div className="dark:text-white   text-ellipsis overflow-hidden ...">s</div>
+          </>
+        )}
 
         {/* 用户 */}
         {!props.userOrGroup && (
-          <div className="flex flex-col dark:text-white">
-            <div>1234 </div>
-            <div>1🔑314</div>
-          </div>
+          <>
+            {' '}
+            <img src={props.userItem.headerImg} className="rounded-full bg-gray-500 w-11 h-11 mr-3" />
+            <div className="flex flex-col dark:text-white">
+              <div>{props.userItem.name}</div>
+              {/*<div>1🔑314</div>*/}
+            </div>
+          </>
         )}
       </div>
     </div>

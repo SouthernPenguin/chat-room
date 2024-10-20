@@ -8,7 +8,7 @@ import { ILogin } from './login';
 import { FriendShipEnum } from '../type/enmu';
 
 // 好友列表
-export const friendList = () => http.get<ILogin[]>('/friend-ship/list');
+export const friendList = () => http.get<ReturnListInterface<ILogin[]>>('/friend-ship/list');
 
 // 查找好友
 interface IFriendList extends SearchPageInterface {
@@ -43,6 +43,7 @@ export const awaitFriends = () => http.get<ReturnListInterface<IAwaitFriendsRetu
 // 通过好友验证
 export const agreeVerification = (id: number) =>
   http.patch<ReturnListInterface<IAwaitFriendsReturn>>(`/friend-ship/${id}`);
+
 export default {
   agreeVerification,
   awaitFriends,
