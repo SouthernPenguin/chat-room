@@ -8,7 +8,7 @@ import useSocket from '@/app/store/socketStore';
 
 const FriendNotice = () => {
   const [awaitList, setAwaitList] = useState<IAwaitFriendsReturn[]>();
-  const { clearAwaitFriendsNumber } = useSocket();
+  const { clearAwaitFriendsNumber, reduceAwaitFriendsNumber } = useSocket();
 
   const getAwaitFriends = async () => {
     const res = await awaitFriends();
@@ -26,6 +26,7 @@ const FriendNotice = () => {
     const res = await agreeVerification(item.id);
     if (res.success) {
       await getAwaitFriends();
+      reduceAwaitFriendsNumber();
     }
   };
 
