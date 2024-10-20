@@ -9,14 +9,14 @@ export interface ILogin {
   id: number;
   name: string;
   nickname: string | null;
-  headerImg: string | null;
+  headerImg: string | undefined;
   gender: number | null;
 }
 export function login(data: { name: string; password: string }) {
   return http.post<{
     userInfo: ILogin;
     token: string;
-    refreshToken:string
+    refreshToken: string;
   }>('/auth/login', data);
 }
 

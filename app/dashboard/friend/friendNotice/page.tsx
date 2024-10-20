@@ -3,12 +3,16 @@ import { Button, Empty } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { agreeVerification, awaitFriends, IAwaitFriendsReturn } from '@/app/lib/api/friend';
 import { toLocalTime } from '@/app/utils';
+import { FriendShipEnum } from '@/app/lib/type/enmu';
+import useSocket from '@/app/store/socketStore';
 
 const FriendNotice = () => {
   const [awaitList, setAwaitList] = useState<IAwaitFriendsReturn[]>();
+  const { clearAwaitFriendsNumber } = useSocket();
 
   const getAwaitFriends = async () => {
     const res = await awaitFriends();
+    clearAwaitFriendsNumber();
     if (res.success) {
       setAwaitList([...res.data.content]);
     }
@@ -39,7 +43,7 @@ const FriendNotice = () => {
               return (
                 <li
                   key={item.id}
-                  className="flex   items-center h-16  m-auto w-1/2 bg-white dark:bg-black  border-all rounded-md shadow-lg box-content p-2"
+                  className="flex mb-4 items-center h-16  m-auto w-1/2 bg-white dark:bg-black  border-all rounded-md shadow-lg box-content p-2"
                 >
                   <div className="flex-none">
                     <img src={item.fromUser?.headerImg} className="rounded-full  w-12 h-12 mr-3" alt="无图片" />
@@ -52,7 +56,9 @@ const FriendNotice = () => {
                     <p className="text-slate-600">留言：{item.notes}</p>
                   </div>
                   <div className="flex-none">
-                    <Button onClick={() => agreeWith(item)}>同意</Button>
+                    <Button onClick={() => agreeWith(item)} disabled={item.state === FriendShipEnum.通过}>
+                      {item.state === FriendShipEnum.通过 ? '已同意' : '同意'}
+                    </Button>
                   </div>
                 </li>
               );

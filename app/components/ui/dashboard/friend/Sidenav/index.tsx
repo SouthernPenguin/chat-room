@@ -1,14 +1,16 @@
 'use client';
-import { Segmented } from 'antd';
+import { Badge, Segmented } from 'antd';
 import React, { useState } from 'react';
 import { RightOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import ListSearch from '@/app/components/public/ListSearch';
 import UserItem from '../userItem';
 import './index.scss';
+import useSocket from '@/app/store/socketStore';
 
 const SideNav = () => {
   const [segmentedValue, setSegmentedValue] = useState<string>('好友');
+  const { awaitFriendsNumber } = useSocket();
 
   return (
     <div className="dark:bg-black bg-gray-50" id="friend-sideNav">
@@ -18,7 +20,10 @@ const SideNav = () => {
       <div className="w-80 ">
         <Link href="/dashboard/friend/friendNotice">
           <div className="notify h-10 pl-3 pr-8 dark:text-white flex justify-between">
-            <span>好友通知</span>
+            <div>
+              <span className="mr-3">好友通知</span>
+              <Badge count={awaitFriendsNumber} showZero={false}></Badge>
+            </div>
             <RightOutlined />
           </div>
         </Link>
