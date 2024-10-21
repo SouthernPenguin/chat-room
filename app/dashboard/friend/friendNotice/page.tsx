@@ -5,10 +5,13 @@ import { agreeVerification, awaitFriends, IAwaitFriendsReturn } from '@/app/lib/
 import { toLocalTime } from '@/app/utils';
 import { FriendShipEnum } from '@/app/lib/type/enmu';
 import useSocket from '@/app/store/socketStore';
+import { ReturnListInterface } from '@/app/lib/type/publiceType';
+import socket from '@/app/utils/socket/socket';
+import { AwaitFriend } from '@/app/utils/socket';
 
 const FriendNotice = () => {
   const [awaitList, setAwaitList] = useState<IAwaitFriendsReturn[]>();
-  const { clearAwaitFriendsNumber, reduceAwaitFriendsNumber } = useSocket();
+  const { clearAwaitFriendsNumber, reduceAwaitFriendsNumber, setAwaitFriendsNumber } = useSocket();
 
   const getAwaitFriends = async () => {
     const res = await awaitFriends();
@@ -19,6 +22,17 @@ const FriendNotice = () => {
   };
   useEffect(() => {
     getAwaitFriends();
+
+    function onAwaitFriend(res: ReturnListInterface<IAwaitFriendsReturn[]>) {
+      if (res.content.length) {
+        setAwaitList([...res.content]);
+      }
+    }
+    socket.on(AwaitFriend, onAwaitFriend);
+
+    return () => {
+      socket.off(AwaitFriend, onAwaitFriend);
+    };
   }, []);
 
   // 通过
