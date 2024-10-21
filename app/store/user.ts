@@ -4,7 +4,13 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface State {
   user: ILogin;
+  selectUserInfo: ILogin;
+
   setUserInfo: (info: ILogin) => void;
+  setSelectUserInfo: (info: ILogin) => void;
+
+  typeUserOrGroupChat: number; //1:user 2:group chat
+  setType: (type: number) => void;
   // increase: (by: number) => void;
   // reduce: (by: number) => void;
   // addArr: (item: string) => void;
@@ -18,6 +24,11 @@ const useUserStore = create<State>()(
     (set, get) => ({
       user: { id: -1, name: '', nickname: '', headerImg: '', gender: -1 },
       setUserInfo: (info: ILogin) => set(() => ({ user: Object.assign(get().user, info) })),
+
+      selectUserInfo: { id: -1, name: '', nickname: '', headerImg: '', gender: -1 },
+      typeUserOrGroupChat: -1,
+      setType: (type: number) => set(state => ({ typeUserOrGroupChat: type })),
+      setSelectUserInfo: (info: ILogin) => set(() => ({ selectUserInfo: Object.assign(get().selectUserInfo, info) })),
     }),
     {
       name: 'UserInfo', // 存储名称

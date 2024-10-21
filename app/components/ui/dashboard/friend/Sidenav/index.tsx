@@ -67,7 +67,11 @@ const SideNav = () => {
           <div>
             {list.length &&
               list.map(item => {
-                return <UserItem userOrGroup={false} userItem={item} key={item.id} />;
+                return (
+                  <Link href="/dashboard/friend" key={item.id}>
+                    <UserItem userOrGroup={false} userItem={item} />
+                  </Link>
+                );
               })}
           </div>
         )}

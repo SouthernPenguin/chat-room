@@ -1,20 +1,23 @@
 import { EditOutlined, FormOutlined, LikeFilled, ManOutlined, WomanOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import React from 'react';
+import useUserStore from '@/app/store/user';
 
 const UserDetail = () => {
+  const { selectUserInfo } = useUserStore();
+
+  const toChat = () => {
+    console.log(selectUserInfo);
+  };
   return (
     <div className="w-5/12   m-auto mt-52">
       {/* 头像 */}
       <div className="p-3  flex items-center justify-between">
         <div className="flex">
-          <img
-            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            className="rounded-full bg-gray-500 w-20 h-20 mr-3"
-          />
+          <img src={selectUserInfo.headerImg} alt="无图片" className="rounded-full bg-gray-500 w-20 h-20 mr-3" />
           <div>
-            <p className="pt-2">似懂非懂</p>
-            <p className="pt-1 text-gray-400 text-sm">似懂非懂</p>
+            <p className="pt-2">{selectUserInfo.name}</p>
+            <p className="pt-1 text-gray-400 text-sm">{selectUserInfo.nickname}</p>
           </div>
         </div>
         <div>
@@ -27,8 +30,9 @@ const UserDetail = () => {
       <div className="p-3 ">
         <ul className="flex">
           <li className="mr-5 text-sm">
-            <ManOutlined className="text-blue-400" />
-            <WomanOutlined className="text-pink-400" />男
+            {selectUserInfo.gender === 1 && <ManOutlined className="text-blue-400" />}
+            {selectUserInfo.gender === 2 && <WomanOutlined className="text-pink-400" />}
+            {selectUserInfo.gender === 1 ? '男' : '女'}
           </li>
           <li className="mr-5 text-sm">26岁</li>
           <li className="mr-5 text-sm">8月20日 狮子座</li>
@@ -53,7 +57,7 @@ const UserDetail = () => {
       </div>
 
       <div className="p-2 text-center">
-        <Button type="primary" className="w-28">
+        <Button type="primary" className="w-28" onClick={() => toChat()}>
           发送
         </Button>
       </div>
