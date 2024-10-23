@@ -3,6 +3,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Dropdown, MenuProps } from 'antd';
 import React, { useState } from 'react';
 import FindFriend from '../FindFriend';
+import CreateGroupChat from '@/app/components/public/CreateGroupChat';
 
 const items: MenuProps['items'] = [
   {
@@ -17,10 +18,14 @@ const items: MenuProps['items'] = [
 
 const ListSearch = () => {
   const [show, setShow] = useState<boolean>(false);
+  const [groupShow, setGroupShow] = useState<boolean>(true);
 
   const onClick: MenuProps['onClick'] = ({ key }) => {
     if (key === '1') {
       setShow(true);
+    }
+    if (key === '2') {
+      setGroupShow(true);
     }
   };
   return (
@@ -37,6 +42,7 @@ const ListSearch = () => {
       </div>
 
       <FindFriend show={show} closeOpen={() => setShow(false)} />
+      <CreateGroupChat show={groupShow} closeOpen={() => setGroupShow(false)} />
     </>
   );
 };

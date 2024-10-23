@@ -11,6 +11,7 @@ export interface ILogin {
   nickname: string | null;
   headerImg: string | undefined;
   gender: number | null;
+  isCheck?: boolean;
 }
 export function login(data: { name: string; password: string }) {
   return http.post<{
