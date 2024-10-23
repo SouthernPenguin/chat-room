@@ -9,11 +9,7 @@ import type { DraggableData, DraggableEvent } from 'react-draggable';
 import Draggable from 'react-draggable';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ApplyAorFriends from './ApplyAorFriends';
-
-interface IProps {
-  show: boolean;
-  closeOpen: () => void;
-}
+import { IProps } from '@/app/lib/type/modalProps';
 
 interface ISelectItem {
   show: boolean;
