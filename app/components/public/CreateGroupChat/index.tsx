@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Checkbox, Input, Modal } from 'antd';
+import { Button, Checkbox, Input, message, Modal } from 'antd';
 import { IProps } from '@/app/lib/type/modalProps';
 import { friendList } from '@/app/lib/api/friend';
 import { ILogin } from '@/app/lib/api/login';
+import { creatGroupChat } from '@/app/lib/api/groupChat';
 
 const CreateGroupChat = (props: IProps) => {
   const [open, setOpen] = useState(false);
@@ -30,14 +31,22 @@ const CreateGroupChat = (props: IProps) => {
     }
   };
 
-  const handleOk = () => {
-    setTimeout(() => {
+  const handleOk = async () => {
+    const res = await creatGroupChat({
+      name: selectedList.map(item => item.name).toString(),
+      userIds: selectedList.map(item => item.id),
+    });
+    if (res.success) {
       setOpen(false);
-    }, 3000);
+      setSelectedList([]);
+      message.success('创建成功');
+      props.closeOpen();
+    }
   };
 
   const handleCancel = () => {
     setOpen(false);
+    setSelectedList([]);
     props.closeOpen();
   };
 
@@ -102,7 +111,7 @@ const CreateGroupChat = (props: IProps) => {
           <div className="flex-1  h-96 pl-5 overflow-y-scroll">
             <div className="flex justify-between">
               <p>创建群聊</p>
-              <p className="text-gray-400">已选1联系人</p>
+              <p className="text-gray-400">已选{selectedList.length}联系人</p>
             </div>
             {selectedList.length &&
               selectedList.map((item: ILogin, index: number) => {

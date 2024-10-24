@@ -18,7 +18,7 @@ const items: MenuProps['items'] = [
 
 const ListSearch = () => {
   const [show, setShow] = useState<boolean>(false);
-  const [groupShow, setGroupShow] = useState<boolean>(true);
+  const [groupShow, setGroupShow] = useState<boolean>(false);
 
   const onClick: MenuProps['onClick'] = ({ key }) => {
     if (key === '1') {
