@@ -11,6 +11,7 @@ import { IAwaitFriendsReturn } from '@/app/lib/api/friend';
 import { ReturnListInterface } from '@/app/lib/type/publiceType';
 import { FriendShipEnum } from '@/app/lib/type/enmu';
 import { AwaitFriend } from '@/app/utils/socket';
+import { allLocalStorageMove } from '@/app/utils';
 
 const SideNav: React.FC = () => {
   const { awaitFriendsNumber, setAwaitFriendsNumber } = useSocket();
@@ -28,6 +29,10 @@ const SideNav: React.FC = () => {
     };
   }, []);
 
+  const singOutFn = () => {
+    allLocalStorageMove();
+    signOut({ callbackUrl: '/signin' });
+  };
   return (
     <div className="dark:bg-black w-20 bg-mainBackground h-full overflow-hidden flex flex-col justify-between pb-3">
       <div>
@@ -64,7 +69,7 @@ const SideNav: React.FC = () => {
         <li className="text-xl mb-3">
           <SunOutlined />
         </li>
-        <li className="flex flex-col items-center" onClick={() => signOut({ callbackUrl: '/signin' })}>
+        <li className="flex flex-col items-center" onClick={() => singOutFn()}>
           <LogoutOutlined />
           <span className="text-xs">Sign Out</span>
         </li>
