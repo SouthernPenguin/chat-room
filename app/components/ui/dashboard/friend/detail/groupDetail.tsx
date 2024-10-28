@@ -1,17 +1,15 @@
 import React from 'react';
 import { Button } from 'antd';
 import { NotificationOutlined, ProfileOutlined, TeamOutlined, FormOutlined } from '@ant-design/icons';
+import useUserStore from '@/app/store/user';
 const GroupDetail = () => {
+  const { selectUserInfo } = useUserStore();
+
   return (
     <div className="w-5/12  m-auto mt-52">
       {/* 头像 */}
       <div className="p-3  flex  ">
-        <img
-          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-          className="rounded-full bg-gray-500 w-20 h-20 mr-3"
-        />
-
-        <p className="pt-2">似懂非懂</p>
+        <p className="pt-2">群名：{selectUserInfo.name}</p>
       </div>
 
       <div className="p-2   flex items-center justify-between">
@@ -45,17 +43,14 @@ const GroupDetail = () => {
       <div className="p-2">
         <p className="mb-1">
           <TeamOutlined />
-          群成员（132132人）
+          群成员（{selectUserInfo.headerImages && selectUserInfo.headerImages.length} 人）
         </p>
         <div className="flex">
-          <img
-            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            className="rounded-full bg-gray-500 w-7 h-7 mr-3"
-          />
-          <img
-            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            className="rounded-full bg-gray-500 w-7 h-7 mr-3"
-          />
+          {selectUserInfo.headerImages &&
+            selectUserInfo.headerImages.length &&
+            selectUserInfo?.headerImages.map((src: string, index: number) => {
+              return <img key={index} src={src} className="rounded-full bg-gray-500 w-7 h-7 mr-3" alt="无图片" />;
+            })}
         </div>
       </div>
 

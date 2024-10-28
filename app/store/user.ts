@@ -2,12 +2,18 @@ import { create } from 'zustand';
 import { ILogin } from '../lib/api/login';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
+export interface ISelectUserInfo extends ILogin {
+  headerImages?: string[];
+}
+
+export type IGroupItem = Pick<ISelectUserInfo, 'headerImages' | 'name'>;
+
 interface State {
   user: ILogin;
-  selectUserInfo: ILogin;
+  selectUserInfo: ISelectUserInfo;
 
   setUserInfo: (info: ILogin) => void;
-  setSelectUserInfo: (info: ILogin) => void;
+  setSelectUserInfo: (info: ISelectUserInfo) => void;
 
   typeUserOrGroupChat: number; //1:user 2:group chat
   setType: (type: number) => void;
@@ -27,8 +33,9 @@ const useUserStore = create<State>()(
 
       selectUserInfo: { id: -1, name: '', nickname: '', headerImg: '', gender: -1 },
       typeUserOrGroupChat: -1,
-      setType: (type: number) => set(state => ({ typeUserOrGroupChat: type })),
-      setSelectUserInfo: (info: ILogin) => set(() => ({ selectUserInfo: Object.assign(get().selectUserInfo, info) })),
+      setType: (type: number) => set(() => ({ typeUserOrGroupChat: type })),
+      setSelectUserInfo: (info: ISelectUserInfo) =>
+        set(() => ({ selectUserInfo: Object.assign(get().selectUserInfo, info) })),
     }),
     {
       name: 'UserInfo', // 存储名称

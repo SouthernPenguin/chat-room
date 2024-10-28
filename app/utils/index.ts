@@ -33,3 +33,11 @@ export const toLocalTime = (str: string): string => {
   const date = moment(str).local(); // 转换为本地时间
   return date.format('YYYY-MM-DD HH:mm:ss');
 };
+
+export const stringCapture = (str: string | undefined) => {
+  if (str && str.length > 4) {
+    //如果字符长度超过10，后面的字符就变成...可自行调整长度和代替字符
+    return str.substring(0, 5) + '...'; //截取从第一个字符开始，往后取10个字符，剩余的用...代替
+  }
+  return str;
+};
