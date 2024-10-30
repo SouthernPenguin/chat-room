@@ -153,8 +153,8 @@ export const http = {
     return service.patch(url, data, config);
   },
 
-  delete<T>(url: string, data?: object, config?: InternalAxiosRequestConfig): Promise<Result<T>> {
-    return service.delete(url, data, config);
+  delete<T>(url: string, config?: InternalAxiosRequestConfig): Promise<Result<T>> {
+    return service.delete(url, config);
   },
 };
 
