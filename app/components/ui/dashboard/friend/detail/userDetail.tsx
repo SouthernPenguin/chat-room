@@ -2,12 +2,14 @@ import { EditOutlined, FormOutlined, LikeFilled, ManOutlined, WomanOutlined } fr
 import { Button } from 'antd';
 import React from 'react';
 import useUserStore from '@/app/store/user';
+import { useRouter } from 'next/navigation';
 
 const UserDetail = () => {
+  const router = useRouter();
   const { selectUserInfo } = useUserStore();
 
   const toChat = () => {
-    console.log(selectUserInfo);
+    router.push(`/dashboard/chatRoom/${selectUserInfo.id}`);
   };
   return (
     <div className="w-5/12   m-auto mt-52">

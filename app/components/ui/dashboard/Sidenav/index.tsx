@@ -33,6 +33,7 @@ const SideNav: React.FC = () => {
     allLocalStorageMove();
     signOut({ callbackUrl: '/signin' });
   };
+
   return (
     <div className="dark:bg-black w-20 bg-mainBackground h-full overflow-hidden flex flex-col justify-between pb-3">
       <div>
