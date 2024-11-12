@@ -106,20 +106,18 @@ const ChatContent: React.FC = () => {
               </p>
             )}
 
-            {messageHistory.length &&
-              messageHistory.map((item: IMessageHistoryList) => {
-                return item.fromUserId === user.id ? (
-                  <MyselfMessage item={item} user={user} key={item.id} />
-                ) : (
-                  <CounterpartMessage item={item} key={item.id} user={selectUserInfo} />
-                );
-              })}
+            {messageHistory.map((item: IMessageHistoryList) => {
+              return item.fromUserId === user.id ? (
+                <MyselfMessage item={item} user={user} key={item.id} />
+              ) : (
+                <CounterpartMessage item={item} key={item.id} user={selectUserInfo} />
+              );
+            })}
           </div>
 
           {/* 发送消息 */}
           <div className="w-full flex justify-center min-h-16 mt-2">
             <div
-              // bg-zinc-400 min-h-14
               className=" w-3/5 rounded-[30px] flex justify-between items-center pl-3 box-border"
               style={{ background: '#cdcdcd66' }}
             >
