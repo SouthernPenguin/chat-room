@@ -7,7 +7,7 @@
 import axios from 'axios';
 import { message as AntMessage } from 'antd';
 import type { AxiosInstance, AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
-import { __TOKEN__, __REFRESH_TOKEN__ } from '@/app/utils/constant';
+import { __REFRESH_TOKEN__ } from '@/app/utils/constant';
 import { allLocalStorageMove, getLocalStorage, setLocalStorage } from '@/app/utils';
 import { signOut } from 'next-auth/react';
 
