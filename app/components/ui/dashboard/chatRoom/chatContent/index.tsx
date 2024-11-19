@@ -98,6 +98,7 @@ const ChatContent: React.FC = () => {
         message.error(`${info.file.name} file upload failed.`);
       }
     },
+    fileList: [],
   };
 
   return (
