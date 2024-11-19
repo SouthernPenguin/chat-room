@@ -2,8 +2,9 @@ import React from 'react';
 import { toLocalTime } from '@/app/utils';
 import { IMessageHistoryList, revokeMessage, deleteMessage } from '@/app/lib/api/message';
 import { ILogin } from '@/app/lib/api/login';
-import { Dropdown, MenuProps, message } from 'antd';
+import { Dropdown, MenuProps, message, Image } from 'antd';
 import { CopyOutlined, RollbackOutlined } from '@ant-design/icons';
+import { AllowedImageTypes } from '@/app/utils/constant';
 
 export interface IProps {
   item: IMessageHistoryList;
@@ -56,6 +57,15 @@ const MyselfMessage = (props: IProps) => {
     }
   };
 
+  const messageEl = (item: IMessageHistoryList) => {
+    if (item.fileType == null) {
+      return item.postMessage;
+    }
+    if (AllowedImageTypes.includes(item.fileType)) {
+      return <Image width={200} src={item.postMessage} />;
+    }
+  };
+
   return (
     <div className="w-full flex justify-end mb-2">
       <div className="flex max-w-[40%]">
@@ -65,7 +75,7 @@ const MyselfMessage = (props: IProps) => {
               className="bg-mainForeground rounded-l-3xl rounded-br-3xl p-2 w-screen-md shadow-lg dark:text-white mb-1"
               style={{ wordBreak: 'break-all' }}
             >
-              {item.postMessage}
+              {messageEl(item)}
             </div>
           </Dropdown>
           <div className="text-right text-gray-500 dark:text-white text-xs">{toLocalTime(item.createdTime)}</div>

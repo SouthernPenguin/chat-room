@@ -1,5 +1,5 @@
 'use client';
-import { PhoneOutlined, PaperClipOutlined, VideoCameraOutlined, AudioFilled, SendOutlined } from '@ant-design/icons';
+import { PhoneOutlined, ToTopOutlined, VideoCameraOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import useUserStore from '@/app/store/user';
@@ -10,7 +10,10 @@ import MyselfMessage from './MyselfMessage';
 import CounterpartMessage from '@/app/components/ui/dashboard/chatRoom/chatContent/CounterpartMessage';
 import socket from '@/app/utils/socket/socket';
 import { ActiveTowUsers } from '@/app/utils/socket';
-import { Button } from 'antd';
+import { Button, message, Upload, UploadProps } from 'antd';
+import TextArea from 'antd/es/input/TextArea';
+import { getLocalStorage } from '@/app/utils';
+import { chatUploadUrl } from '@/app/lib/api/upload';
 
 const ChatContent: React.FC = () => {
   const { selectUserInfo, user } = useUserStore();
@@ -81,6 +84,22 @@ const ChatContent: React.FC = () => {
     setMsgPage(msgPage + 1);
   };
 
+  const UpLoadProps: UploadProps = {
+    name: 'file',
+    action: `${process.env.NEXT_PUBLIC_API_URL}${chatUploadUrl(params.id * 1, ChatType.私聊)} `,
+    headers: {
+      authorization: `Bearer ${getLocalStorage()}`,
+    },
+    onChange(info) {
+      if (info.file.status !== 'uploading') {
+        message.info(`${info.file}${info.fileList}`);
+      }
+      if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  };
+
   return (
     <div className="flex h-full dark:bg-black bg-gray-50">
       <div className="flex-auto h-full flex">
@@ -117,38 +136,24 @@ const ChatContent: React.FC = () => {
 
           {/* 发送消息 */}
           <div className="w-full flex justify-center min-h-16 mt-2">
-            <div
-              className=" w-3/5 rounded-[30px] flex justify-between items-center pl-3 box-border"
-              style={{ background: '#cdcdcd66' }}
-            >
-              <div className="h-full flex justify-end items-end box-border pb-4">
-                <PaperClipOutlined className="text-3xl text-white " />
+            <div className="w-[70%]   flex justify-between items-end">
+              <div className="flex justify-center  w-10 h-10 border text-gray-400 text-2xl text-center rounded-full">
+                <Upload {...UpLoadProps}>
+                  <ToTopOutlined />
+                </Upload>
               </div>
 
-              <div className="flex min-h-14 justify-center w-3/4 overflow-hidden transform origin-bottom">
-                {/*<TextArea*/}
-                {/*  placeholder="Autosize height based on content lines"*/}
-                {/*  autoSize={{ minRows: 2, maxRows: 8 }}*/}
-                {/*  className="w-11/12 h-10 border-none bg-inherit focus:outline-none focus:border-transparent"*/}
-                {/*/>*/}
-                <textarea
-                  rows={8}
-                  className="w-11/12 h-10 border-none bg-inherit focus:outline-none focus:border-transparent"
+              <div className="w-full pl-3 pr-3">
+                <TextArea
                   value={textareaValue}
-                  onChange={event => setTextareaValue(event.target.value)}
+                  onChange={e => setTextareaValue(e.target.value)}
+                  placeholder="Controlled autosize"
+                  autoSize={{ minRows: 2, maxRows: 5 }}
                 />
               </div>
 
-              <div className="h-full flex justify-end items-end box-border ">
-                <div className=" pb-4">
-                  <AudioFilled className="text-white text-3xl" />
-                </div>
-                <div className="bg-mainForeground relative rounded-full h-14 w-14 text-3xl text-white -rotate-45  mb-1">
-                  <SendOutlined
-                    className="absolute top-2/4 left-2/4 -translate-y-1/2 -translate-x-1/2"
-                    onClick={send}
-                  />
-                </div>
+              <div className="flex justify-center  w-10 h-10 border text-gray-400 text-2xl text-center rounded-full">
+                <ArrowUpOutlined onClick={send} />
               </div>
             </div>
           </div>
