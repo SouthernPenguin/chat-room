@@ -34,6 +34,7 @@ export interface IMessageHistoryList {
   toUserId: number;
   id: number;
   postMessage: string;
+  originalFileName:string;
   state: MessageEnum;
   toUser: ILogin;
 }

@@ -1,36 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { toLocalTime } from '@/app/utils';
-import { IMessageHistoryList, revokeMessage, deleteMessage } from '@/app/lib/api/message';
+import { IMessageHistoryList, revokeMessage } from '@/app/lib/api/message';
 import { ILogin } from '@/app/lib/api/login';
 import { Dropdown, MenuProps, message, Image } from 'antd';
-import { CopyOutlined, RollbackOutlined } from '@ant-design/icons';
-import { AllowedImageTypes } from '@/app/utils/constant';
+import { CopyOutlined, RollbackOutlined, SaveOutlined } from '@ant-design/icons';
+import { AllowedOfficeTypes } from '@/app/utils/constant';
+import { downFiles } from '@/app/lib/api/down';
+import { useMessageEl } from './useMessageEl';
 
 export interface IProps {
   item: IMessageHistoryList;
   user: ILogin;
 }
 
-const items: MenuProps['items'] = [
-  {
-    label: '复制',
-    key: '1',
-    icon: <CopyOutlined />,
-  },
-  // {
-  //   label: '删除',
-  //   key: '2',
-  //   icon: <DeleteOutlined />,
-  // },
-  {
-    label: '撤销',
-    key: '3',
-    icon: <RollbackOutlined />,
-  },
-];
-
 const MyselfMessage = (props: IProps) => {
   const { item, user } = props;
+
+  const [items, setItems] = useState<MenuProps['items']>([
+    {
+      label: '复制',
+      key: '1',
+      icon: <CopyOutlined />,
+    },
+    {
+      label: '撤销',
+      key: '2',
+      icon: <RollbackOutlined />,
+    },
+    {
+      label: '另存为',
+      key: '3',
+      icon: <SaveOutlined />,
+    },
+  ]);
 
   const onClick: MenuProps['onClick'] = async ({ key }) => {
     if (key === '1') {
@@ -43,39 +45,47 @@ const MyselfMessage = (props: IProps) => {
     }
     if (key === '2') {
       try {
-        await deleteMessage(item.id, item.toUserId);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    if (key === '3') {
-      try {
         await revokeMessage(item.id, { toUserId: item.toUserId });
       } catch {
         // todo
       }
     }
+
+    if (key === '3') {
+      try {
+        const response = await downFiles(item.postMessage);
+        debugger;
+        const downloadLink = document.createElement('a');
+        const blob = new Blob([response.data], { type: response.headers['content-type'] });
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = item.originalFileName.split('.')[0]; // 设置下载后的文件名
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        URL.revokeObjectURL(downloadLink.href);
+      } catch (e) {
+        console.log(e);
+      }
+    }
   };
 
-  const messageEl = (item: IMessageHistoryList) => {
-    if (item.fileType == null) {
-      return item.postMessage;
-    }
-    if (AllowedImageTypes.includes(item.fileType)) {
-      return <Image width={200} src={item.postMessage} />;
+  const handleRightClick = (item: IMessageHistoryList) => {
+    if (!AllowedOfficeTypes.includes(item.fileType!)) {
+      let copy = [...items!];
+      setItems(copy.filter(item => item?.key !== '3'));
     }
   };
 
   return (
     <div className="w-full flex justify-end mb-2">
       <div className="flex max-w-[40%]">
-        <div>
+        <div onContextMenu={() => handleRightClick(item)}>
           <Dropdown menu={{ items, onClick }} trigger={['contextMenu']}>
             <div
               className="bg-mainForeground rounded-l-3xl rounded-br-3xl p-2 w-screen-md shadow-lg dark:text-white mb-1"
               style={{ wordBreak: 'break-all' }}
             >
-              {messageEl(item)}
+              {useMessageEl(item)}
             </div>
           </Dropdown>
           <div className="text-right text-gray-500 dark:text-white text-xs">{toLocalTime(item.createdTime)}</div>
