@@ -45,7 +45,7 @@ const CounterpartMessage = (props: IProps) => {
 
   return (
     <div className="w-full">
-      <div className="flex max-w-[40%]">
+      <div className="flex max-w-[50%]">
         <img src={user.headerImg} className="rounded-full bg-gray-500 w-9 h-9 mr-3" alt="无图片" />
         <div>
           <Dropdown menu={{ items, onClick }} trigger={['contextMenu']}>

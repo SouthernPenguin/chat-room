@@ -78,7 +78,7 @@ const MyselfMessage = (props: IProps) => {
 
   return (
     <div className="w-full flex justify-end mb-2">
-      <div className="flex max-w-[40%]">
+      <div className="flex max-w-[50%]">
         <div onContextMenu={() => handleRightClick(item)}>
           <Dropdown menu={{ items, onClick }} trigger={['contextMenu']}>
             <div
