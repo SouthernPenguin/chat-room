@@ -1,19 +1,23 @@
 'use client';
 import { PhoneOutlined, ToTopOutlined, VideoCameraOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import { useParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import useUserStore from '@/app/store/user';
-import { IMessageHistoryList, messageHistoryList, sendMessage } from '@/app/lib/api/message';
-import { ChatType } from '@/app/lib/type/enmu';
-import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
-import MyselfMessage from './MyselfMessage';
-import CounterpartMessage from '@/app/components/ui/dashboard/chatRoom/chatContent/CounterpartMessage';
-import socket from '@/app/utils/socket/socket';
-import { ActiveTowUsers } from '@/app/utils/socket';
+import React, { useEffect, useState, useRef } from 'react';
 import { Button, message, Upload, UploadProps } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import { getLocalStorage } from '@/app/utils';
+
+import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
+
+import { IMessageHistoryList, messageHistoryList, sendMessage } from '@/app/lib/api/message';
+import { ChatType } from '@/app/lib/type/enmu';
 import { chatUploadUrl } from '@/app/lib/api/upload';
+
+import socket from '@/app/utils/socket/socket';
+import { ActiveTowUsers } from '@/app/utils/socket';
+import { getLocalStorage } from '@/app/utils';
+import useUserStore from '@/app/store/user';
+
+import MyselfMessage from './MyselfMessage';
+import CounterpartMessage from './CounterpartMessage';
 
 const ChatContent: React.FC = () => {
   const { selectUserInfo, user } = useUserStore();
@@ -27,6 +31,7 @@ const ChatContent: React.FC = () => {
   const params = useParams<Params>();
 
   const [textareaValue, setTextareaValue] = useState<string>('');
+  const scrollableDivRef = useRef(null);
 
   const send = async () => {
     const res = await sendMessage({
@@ -36,6 +41,7 @@ const ChatContent: React.FC = () => {
     });
     if (res.success) {
       setTextareaValue('');
+      scrollableDivRefFn();
     }
   };
 
@@ -46,9 +52,20 @@ const ChatContent: React.FC = () => {
   }, [user]);
 
   useEffect(() => {
-    function onActiveTowUsers(res: IMessageHistoryList) {
-      setMessageHistory((prevMessageHistory: IMessageHistoryList[]) => [...prevMessageHistory, res]);
+    function onActiveTowUsers(res: IMessageHistoryList | string) {
+      if (typeof res === 'string') {
+        setMessageHistory((prevMessageHistory: IMessageHistoryList[]) => {
+          const newArray = [...prevMessageHistory];
+          newArray.splice(-1, 1);
+          return newArray;
+        });
+      } else {
+        setMessageHistory((prevMessageHistory: IMessageHistoryList[]) => {
+          return [...prevMessageHistory, res];
+        });
+      }
     }
+    scrollableDivRefFn();
     socket.on(ActiveTowUsers, onActiveTowUsers);
 
     return () => {
@@ -101,6 +118,12 @@ const ChatContent: React.FC = () => {
     fileList: [],
   };
 
+  const scrollableDivRefFn = () => {
+    if (scrollableDivRef.current) {
+      scrollableDivRef.current.scrollTop = scrollableDivRef.current.scrollHeight;
+    }
+  };
+
   return (
     <div className="flex h-full dark:bg-black bg-gray-50">
       <div className="flex-auto h-full flex">
@@ -117,7 +140,11 @@ const ChatContent: React.FC = () => {
             </div>
           </div>
 
-          <div style={{ height: 'calc(100% - 4rem - 3.5rem - 1.25rem - 0.5rem)' }} className="overflow-y-scroll p-2">
+          <div
+            ref={scrollableDivRef}
+            style={{ height: 'calc(100% - 4rem - 3.5rem - 1.25rem - 0.5rem)' }}
+            className="overflow-y-scroll p-2"
+          >
             {page.totalPages > 1 && msgPage < page.totalPages && (
               <p className="text-center text-gray-300">
                 <Button type="link" onClick={loadMore}>
