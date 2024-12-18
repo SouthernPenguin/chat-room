@@ -2,11 +2,21 @@ import React from 'react';
 import './index.scss';
 import { Badge } from 'antd';
 import Link from 'next/link';
+import { IMessageList } from '@/app/lib/api/notice';
+import useUserStore from '@/app/store/user';
+import { ILogin } from '@/app/lib/api/login';
+import { calcDate } from '@/app/utils';
 
 interface IProps {
   id: number;
+  userItem: IMessageList;
 }
 const MessageItem = (props: IProps) => {
+  const { user } = useUserStore();
+
+  const toUser: ILogin | number =
+    user.id !== props.userItem.toUser.id ? props.userItem.fromUser : props.userItem.toUser;
+
   return (
     <Link href={'/dashboard/chatRoom/' + props.id}>
       <div
@@ -17,22 +27,18 @@ const MessageItem = (props: IProps) => {
         <div className="p-3 box-border">
           <div className="flex gap-x-2 mb-2 justify-between">
             <div className="flex  w-2/3">
-              <img
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                className="rounded-full bg-gray-500 w-11 h-11 mr-3"
-              />
-              <div className="dark:text-white font-black text-ellipsis overflow-hidden ...">
-                fsadsffsadsffsadsffsadsffsadsffsadsffsadsffsadsf
-              </div>
+              <img src={toUser.headerImg} className="rounded-full bg-gray-500 w-11 h-11 mr-3" />
+              <div className="dark:text-white font-black text-ellipsis overflow-hidden ...">{toUser.name}</div>
             </div>
 
             <div className="dark:text-white text-sm" style={{ color: '#d3d3d3' }}>
-              4小时前
+              {calcDate(props.userItem.updateTime)}
             </div>
           </div>
           <div className="relative dark:text-white text-ellipsis overflow-hidden ... pr-7">
-            <span>2fsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsd</span>
-            <Badge count={5} className="right-0 top-0 absolute"></Badge>
+            <span>{props.userItem.newMessage}</span>
+            {/*未读统计*/}
+            {/*<Badge count={5} className="right-0 top-0 absolute"></Badge>*/}
           </div>
         </div>
       </div>
