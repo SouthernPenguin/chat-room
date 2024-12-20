@@ -52,6 +52,11 @@ const ChatContent: React.FC = () => {
   }, [user]);
 
   useEffect(() => {
+    getMessageHistoryList(msgPage);
+  }, [params.id]);
+
+  // socket
+  useEffect(() => {
     function onActiveTowUsers(res: IMessageHistoryList | string) {
       if (typeof res === 'string') {
         setMessageHistory((prevMessageHistory: IMessageHistoryList[]) => {

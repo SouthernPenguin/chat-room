@@ -15,10 +15,10 @@ const MessageItem = (props: IProps) => {
   const { user } = useUserStore();
 
   const toUser: ILogin | number =
-    user.id !== props.userItem.toUser.id ? props.userItem.fromUser : props.userItem.toUser;
+    user.id !== props.userItem.toUser.id ? props.userItem.toUser : props.userItem.fromUser;
 
   return (
-    <Link href={'/dashboard/chatRoom/' + props.id}>
+    <Link href={'/dashboard/chatRoom/' + toUser.id}>
       <div
         id="messageItem"
         className="w-full bg-white h-24 border-all rounded-md shadow-lg relative overflow-hidden dark:bg-black dark:text-white mb-3"
