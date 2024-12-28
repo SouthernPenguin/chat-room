@@ -9,7 +9,7 @@ const UserDetail = () => {
   const { selectUserInfo } = useUserStore();
 
   const toChat = () => {
-    router.push(`/dashboard/chatRoom/${selectUserInfo.id}`);
+    router.push(`/dashboard/chatRoom/singleChatRoom/${selectUserInfo.id}`);
   };
   return (
     <div className="w-5/12   m-auto mt-52">

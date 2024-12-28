@@ -18,7 +18,7 @@ const MessageItem = (props: IProps) => {
     user.id !== props.userItem.toUser.id ? props.userItem.toUser : props.userItem.fromUser;
 
   return (
-    <Link href={'/dashboard/chatRoom/' + toUser.id}>
+    <Link href={'/dashboard/chatRoom/singleChatRoom/' + toUser.id}>
       <div
         id="messageItem"
         className="w-full bg-white h-24 border-all rounded-md shadow-lg relative overflow-hidden dark:bg-black dark:text-white mb-3"
