@@ -1,9 +1,15 @@
 import React from 'react';
 import { Button } from 'antd';
+import { useRouter } from 'next/navigation';
 import { NotificationOutlined, ProfileOutlined, TeamOutlined, FormOutlined } from '@ant-design/icons';
 import useUserStore from '@/app/store/user';
 const GroupDetail = () => {
+  const router = useRouter();
   const { selectUserInfo } = useUserStore();
+
+  const toChat = () => {
+    router.push(`/dashboard/chatRoom/groupChatRoom/${selectUserInfo.id}`);
+  };
 
   return (
     <div className="w-5/12  m-auto mt-52">
@@ -55,7 +61,7 @@ const GroupDetail = () => {
       </div>
 
       <div className="p-2 text-center">
-        <Button type="primary" className="w-28">
+        <Button type="primary" className="w-28" onClick={toChat}>
           发送
         </Button>
       </div>
