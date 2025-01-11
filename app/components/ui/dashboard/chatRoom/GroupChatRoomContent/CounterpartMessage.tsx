@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { IMessageHistoryList } from '@/app/lib/api/message';
 import { toLocalTime } from '@/app/utils';
 import { Dropdown, Image, MenuProps, message } from 'antd';
 import { CopyOutlined, RollbackOutlined, SaveOutlined } from '@ant-design/icons';
 import { ISelectUserInfo } from '@/app/store/user';
 import { useMessageEl } from './useMessageEl';
+import { IChatMessageHistoryList } from '@/app/lib/api/groupChat';
 
 export interface IProps {
-  item: IMessageHistoryList;
+  item: IChatMessageHistoryList;
   user: ISelectUserInfo;
 }
 
@@ -20,11 +20,11 @@ const CounterpartMessage = (props: IProps) => {
       key: '1',
       icon: <CopyOutlined />,
     },
-    {
-      label: '撤销',
-      key: '2',
-      icon: <RollbackOutlined />,
-    },
+    // {
+    //   label: '撤销',
+    //   key: '2',
+    //   icon: <RollbackOutlined />,
+    // },
     {
       label: '另存为',
       key: '3',
@@ -46,7 +46,7 @@ const CounterpartMessage = (props: IProps) => {
   return (
     <div className="w-full">
       <div className="flex max-w-[50%]">
-        <img src={user.headerImg} className="rounded-full bg-gray-500 w-9 h-9 mr-3" alt="无图片" />
+        <img src={item.fromUser.headerImg} className="rounded-full bg-gray-500 w-9 h-9 mr-3" alt="无图片" />
         <div>
           <Dropdown menu={{ items, onClick }} trigger={['contextMenu']}>
             <div

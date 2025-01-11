@@ -95,6 +95,7 @@ const SideNav = () => {
                     <UserItem
                       userOrGroup={true}
                       groupItem={{
+                        id: item.id,
                         name: item.name,
                         headerImages: item.users.map(value => value.headerImg).splice(0, 8) as string[],
                       }}

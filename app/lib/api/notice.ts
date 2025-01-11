@@ -19,7 +19,11 @@ export interface IMessageList {
   groupId: number;
   toUser: ILogin;
   fromUser: ILogin;
-  toUsers: number;
+  toUsers: {
+    id: number;
+    name: string;
+    notice: string;
+  };
 }
 export const messageList = () => http.get<ReturnListInterface<IMessageList[]>>('/notice');
 

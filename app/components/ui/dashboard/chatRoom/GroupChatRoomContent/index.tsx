@@ -7,7 +7,6 @@ import TextArea from 'antd/es/input/TextArea';
 
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 
-import { IMessageHistoryList, messageHistoryList, sendMessage } from '@/app/lib/api/message';
 import { ChatType } from '@/app/lib/type/enmu';
 import { chatUploadUrl } from '@/app/lib/api/upload';
 
@@ -15,13 +14,14 @@ import socket from '@/app/utils/socket/socket';
 import { ActiveTowUsers } from '@/app/utils/socket';
 import { getLocalStorage } from '@/app/utils';
 import useUserStore from '@/app/store/user';
-
 import MyselfMessage from './MyselfMessage';
 import CounterpartMessage from './CounterpartMessage';
 
+import { groupChatHistory, IChatMessageHistoryList, sendMessage } from '@/app/lib/api/groupChat';
+
 const ChatContent: React.FC = () => {
   const { selectUserInfo, user } = useUserStore();
-  const [messageHistory, setMessageHistory] = useState<IMessageHistoryList[]>([]);
+  const [messageHistory, setMessageHistory] = useState<IChatMessageHistoryList[]>([]);
   const [page, setPage] = useState<{ totalElements: number; totalPages: number }>({
     totalElements: -1,
     totalPages: -1,
@@ -36,8 +36,8 @@ const ChatContent: React.FC = () => {
   const send = async () => {
     const res = await sendMessage({
       postMessage: textareaValue,
-      msgType: ChatType.私聊,
-      toUserId: params.id * 1,
+      msgType: ChatType.群聊,
+      groupId: params.id * 1,
     });
     if (res.success) {
       setTextareaValue('');
@@ -57,15 +57,15 @@ const ChatContent: React.FC = () => {
 
   // socket
   useEffect(() => {
-    function onActiveTowUsers(res: IMessageHistoryList | string) {
+    function onActiveTowUsers(res: IChatMessageHistoryList | string) {
       if (typeof res === 'string') {
-        setMessageHistory((prevMessageHistory: IMessageHistoryList[]) => {
+        setMessageHistory((prevMessageHistory: IChatMessageHistoryList[]) => {
           const newArray = [...prevMessageHistory];
           newArray.splice(-1, 1);
           return newArray;
         });
       } else {
-        setMessageHistory((prevMessageHistory: IMessageHistoryList[]) => {
+        setMessageHistory((prevMessageHistory: IChatMessageHistoryList[]) => {
           return [...prevMessageHistory, res];
         });
       }
@@ -84,13 +84,13 @@ const ChatContent: React.FC = () => {
   }, [msgPage]);
 
   const getMessageHistoryList = async (msgPage: number = 1) => {
-    const res = await messageHistoryList({
-      toUserId: params.id,
+    const res = await groupChatHistory(params.id, {
       page: msgPage,
       limit: 10,
     });
     if (res.success) {
       setMessageHistory([...res.data.content, ...messageHistory].sort((a, b) => a.id - b.id));
+
       if (page.totalPages < 0) {
         setPage(
           Object.assign(page, {
@@ -136,7 +136,7 @@ const ChatContent: React.FC = () => {
           {/* 头部 */}
           <div className="flex gap-x-2 mb-2 justify-between   dark:text-white  items-center h-14 pl-2 pr-2 text-center border-l-2 border-b-2 border-gray-200 box-content overflow-hidden">
             <div className="flex w-2/5">
-              <img src={selectUserInfo.headerImg} className="rounded-full bg-gray-500 w-9 h-9 mr-3" alt="加载失败" />
+              <img src={selectUserInfo.headerImg!} className="rounded-full bg-gray-500 w-9 h-9 mr-3" alt="加载失败" />
               <div className=" font-black text-ellipsis overflow-hidden ...">{selectUserInfo.name}</div>
             </div>
             <div className="dark:text-white flex text-2xl">
@@ -158,11 +158,11 @@ const ChatContent: React.FC = () => {
               </p>
             )}
 
-            {messageHistory.map((item: IMessageHistoryList) => {
+            {messageHistory.map((item: IChatMessageHistoryList) => {
               return item.fromUserId === user.id ? (
-                <MyselfMessage item={item} user={user} key={item.id} />
+                <MyselfMessage item={item} user={item.fromUser} key={item.id} />
               ) : (
-                <CounterpartMessage item={item} key={item.id} user={selectUserInfo} />
+                <CounterpartMessage item={item} key={item.id} user={item.fromUser} />
               );
             })}
           </div>

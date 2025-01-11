@@ -6,7 +6,7 @@ export interface ISelectUserInfo extends ILogin {
   headerImages?: string[];
 }
 
-export type IGroupItem = Pick<ISelectUserInfo, 'headerImages' | 'name'>;
+export type IGroupItem = Pick<ISelectUserInfo, 'headerImages' | 'name' | 'id'>;
 
 interface State {
   user: ILogin;

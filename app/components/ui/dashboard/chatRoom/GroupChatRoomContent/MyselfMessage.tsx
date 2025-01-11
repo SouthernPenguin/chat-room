@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { toLocalTime } from '@/app/utils';
-import { IMessageHistoryList, revokeMessage } from '@/app/lib/api/message';
 import { ILogin } from '@/app/lib/api/login';
 import { Dropdown, MenuProps, message, Image } from 'antd';
 import { CopyOutlined, RollbackOutlined, SaveOutlined } from '@ant-design/icons';
-import { AllowedOfficeTypes } from '@/app/utils/constant';
-import { downFiles } from '@/app/lib/api/down';
 import { useMessageEl } from './useMessageEl';
+import { IChatMessageHistoryList, revokeMessage } from '@/app/lib/api/groupChat';
 
 export interface IProps {
-  item: IMessageHistoryList;
+  item: IChatMessageHistoryList;
   user: ILogin;
 }
 
@@ -45,35 +43,35 @@ const MyselfMessage = (props: IProps) => {
     }
     if (key === '2') {
       try {
-        await revokeMessage(item.id, { toUserId: item.toUserId });
+        await revokeMessage({ id: item.id, groupId: item.groupId });
       } catch {
         // todo
       }
     }
 
     if (key === '3') {
-      try {
-        const response = await downFiles(item.postMessage);
-        debugger;
-        const downloadLink = document.createElement('a');
-        const blob = new Blob([response.data], { type: response.headers['content-type'] });
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.download = item.originalFileName.split('.')[0]; // 设置下载后的文件名
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-        URL.revokeObjectURL(downloadLink.href);
-      } catch (e) {
-        console.log(e);
-      }
+      // try {
+      //   const response = await downFiles(item.postMessage);
+      //   debugger;
+      //   const downloadLink = document.createElement('a');
+      //   const blob = new Blob([response.data], { type: response.headers['content-type'] });
+      //   downloadLink.href = URL.createObjectURL(blob);
+      //   downloadLink.download = item.originalFileName.split('.')[0]; // 设置下载后的文件名
+      //   document.body.appendChild(downloadLink);
+      //   downloadLink.click();
+      //   document.body.removeChild(downloadLink);
+      //   URL.revokeObjectURL(downloadLink.href);
+      // } catch (e) {
+      //   console.log(e);
+      // }
     }
   };
 
-  const handleRightClick = (item: IMessageHistoryList) => {
-    if (!AllowedOfficeTypes.includes(item.fileType!)) {
-      let copy = [...items!];
-      setItems(copy.filter(item => item?.key !== '3'));
-    }
+  const handleRightClick = (item: IChatMessageHistoryList) => {
+    // if (!AllowedOfficeTypes.includes(item.fileType!)) {
+    //   let copy = [...items!];
+    //   setItems(copy.filter(item => item?.key !== '3'));
+    // }
   };
 
   return (
