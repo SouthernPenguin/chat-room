@@ -5,6 +5,8 @@ import { Dropdown, MenuProps, message, Image } from 'antd';
 import { CopyOutlined, RollbackOutlined, SaveOutlined } from '@ant-design/icons';
 import { useMessageEl } from './useMessageEl';
 import { IChatMessageHistoryList, revokeMessage } from '@/app/lib/api/groupChat';
+import { downFiles } from '@/app/lib/api/down';
+import { AllowedOfficeTypes } from '@/app/utils/constant';
 
 export interface IProps {
   item: IChatMessageHistoryList;
@@ -50,28 +52,27 @@ const MyselfMessage = (props: IProps) => {
     }
 
     if (key === '3') {
-      // try {
-      //   const response = await downFiles(item.postMessage);
-      //   debugger;
-      //   const downloadLink = document.createElement('a');
-      //   const blob = new Blob([response.data], { type: response.headers['content-type'] });
-      //   downloadLink.href = URL.createObjectURL(blob);
-      //   downloadLink.download = item.originalFileName.split('.')[0]; // 设置下载后的文件名
-      //   document.body.appendChild(downloadLink);
-      //   downloadLink.click();
-      //   document.body.removeChild(downloadLink);
-      //   URL.revokeObjectURL(downloadLink.href);
-      // } catch (e) {
-      //   console.log(e);
-      // }
+      try {
+        const response = await downFiles(item.postMessage);
+        const downloadLink = document.createElement('a');
+        const blob = new Blob([response.data], { type: response.headers['content-type'] });
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = item.originalFileName.split('.')[0]; // 设置下载后的文件名
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        URL.revokeObjectURL(downloadLink.href);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
   const handleRightClick = (item: IChatMessageHistoryList) => {
-    // if (!AllowedOfficeTypes.includes(item.fileType!)) {
-    //   let copy = [...items!];
-    //   setItems(copy.filter(item => item?.key !== '3'));
-    // }
+    if (!AllowedOfficeTypes.includes(item.fileType!)) {
+      const copy = [...items!];
+      setItems(copy.filter(item => item?.key !== '3'));
+    }
   };
 
   return (

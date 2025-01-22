@@ -5,6 +5,7 @@ import { CopyOutlined, RollbackOutlined, SaveOutlined } from '@ant-design/icons'
 import { ISelectUserInfo } from '@/app/store/user';
 import { useMessageEl } from './useMessageEl';
 import { IChatMessageHistoryList } from '@/app/lib/api/groupChat';
+import { AllowedOfficeTypes } from '@/app/utils/constant';
 
 export interface IProps {
   item: IChatMessageHistoryList;
@@ -43,11 +44,17 @@ const CounterpartMessage = (props: IProps) => {
     }
   };
 
+  const handleRightClick = (item: IChatMessageHistoryList) => {
+    if (!AllowedOfficeTypes.includes(item.fileType!)) {
+      const copy = [...items!];
+      setItems(copy.filter(item => item?.key !== '3'));
+    }
+  };
   return (
     <div className="w-full">
       <div className="flex max-w-[50%]">
         <img src={item.fromUser.headerImg} className="rounded-full bg-gray-500 w-9 h-9 mr-3" alt="无图片" />
-        <div>
+        <div onContextMenu={() => handleRightClick(item)}>
           <Dropdown menu={{ items, onClick }} trigger={['contextMenu']}>
             <div
               className="bg-white rounded-r-3xl rounded-bl-3xl p-2 w-screen-md shadow-lg  dark:bg-mainBackground dark:text-white mb-1"

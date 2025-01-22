@@ -36,6 +36,18 @@ export const useMessageEl = (item: IChatMessageHistoryList) => {
           </div>,
         );
       }
+
+      if (item.fileType === 'pdf') {
+        setDisplayContent(
+          <div className="flex justify-between">
+            <div className="mr-3">
+              <div className="w-36">{item.originalFileName}</div>
+              <div>{item.fileSize}</div>
+            </div>
+            <img alt="SVG Image" src="/images/filesIcon/pdf.svg" width="37" height="37"></img>
+          </div>,
+        );
+      }
     }
   }, [item]);
 
