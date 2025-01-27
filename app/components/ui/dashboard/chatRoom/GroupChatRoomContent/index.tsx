@@ -21,7 +21,7 @@ import { groupChatHistory, sendMessage } from '@/app/lib/api/groupChat';
 import { IChatMessageHistoryList } from '@/app/types/groupChat';
 
 const ChatContent: React.FC = () => {
-  const { selectUserInfo, user } = useUserStore();
+  const { selectGroupInfo, user } = useUserStore();
   const [messageHistory, setMessageHistory] = useState<IChatMessageHistoryList[]>([]);
   const [page, setPage] = useState<{ totalElements: number; totalPages: number }>({
     totalElements: -1,
@@ -137,8 +137,8 @@ const ChatContent: React.FC = () => {
           {/* 头部 */}
           <div className="flex gap-x-2 mb-2 justify-between   dark:text-white  items-center h-14 pl-2 pr-2 text-center border-l-2 border-b-2 border-gray-200 box-content overflow-hidden">
             <div className="flex w-2/5">
-              <img src={selectUserInfo.headerImg!} className="rounded-full bg-gray-500 w-9 h-9 mr-3" alt="加载失败" />
-              <div className=" font-black text-ellipsis overflow-hidden ...">{selectUserInfo.name}</div>
+              {/*<img src={selectGroupInfo.headerImg!} className="rounded-full bg-gray-500 w-9 h-9 mr-3" alt="加载失败" />*/}
+              <div className=" font-black text-ellipsis overflow-hidden ...">{selectGroupInfo.name}</div>
             </div>
             <div className="dark:text-white flex text-2xl">
               <PhoneOutlined className="mr-3" />
