@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import MessageItem from '../messageItem';
 import ListSearch from '@/app/components/public/ListSearch';
 import { IMessageList, messageList } from '@/app/lib/api/notice';
-import { IMessageHistoryList } from '@/app/lib/api/message';
 import socket from '@/app/utils/socket/socket';
 import { ActiveUserNoticeList } from '@/app/utils/socket';
 
@@ -41,7 +40,7 @@ const SideNav: React.FC = () => {
         {userMessageList &&
           userMessageList.length &&
           userMessageList.map((item: IMessageList) => {
-            return <MessageItem id={item.id} userItem={item} />;
+            return <MessageItem id={item.id} userItem={item} key={item.id} />;
           })}
       </div>
     </div>
