@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 import { Image } from 'antd';
-import { IMessageHistoryList } from '@/app/lib/api/message';
 import { AllowedImageTypes, AllowedOfficeTypes } from '@/app/utils/constant';
+import { IMessageHistoryList } from '@/app/types/message';
 export const useMessageEl = (item: IMessageHistoryList) => {
   const [displayContent, setDisplayContent] = useState<any>(null);
 

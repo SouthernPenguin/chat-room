@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { IMessageHistoryList } from '@/app/lib/api/message';
 import { toLocalTime } from '@/app/utils';
-import { Dropdown, Image, MenuProps, message } from 'antd';
+import { Dropdown, MenuProps, message } from 'antd';
 import { CopyOutlined, RollbackOutlined, SaveOutlined } from '@ant-design/icons';
 import { ISelectUserInfo } from '@/app/store/user';
 import { useMessageEl } from './useMessageEl';
+import { IMessageHistoryList } from '@/app/types/message';
 
 export interface IProps {
   item: IMessageHistoryList;

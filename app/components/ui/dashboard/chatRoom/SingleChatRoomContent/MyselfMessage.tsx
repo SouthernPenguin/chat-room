@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { toLocalTime } from '@/app/utils';
-import { IMessageHistoryList, revokeMessage } from '@/app/lib/api/message';
+import { revokeMessage } from '@/app/lib/api/message';
 import { Dropdown, MenuProps, message } from 'antd';
 import { CopyOutlined, RollbackOutlined, SaveOutlined } from '@ant-design/icons';
 import { AllowedOfficeTypes } from '@/app/utils/constant';
 import { downFiles } from '@/app/lib/api/down';
 import { useMessageEl } from './useMessageEl';
 import { IUser } from '@/app/types/user';
+import { IMessageHistoryList } from '@/app/types/message';
 
 export interface IProps {
   item: IMessageHistoryList;

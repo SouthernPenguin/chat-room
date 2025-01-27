@@ -1,6 +1,6 @@
 import { MessageEnum } from '@/app/lib/type/enmu';
-import { IOneByOneSendMessage } from '@/app/lib/api/message';
 import { IUser } from '@/app/types/user';
+import { IOneByOneSendMessage } from '@/app/types/message';
 
 // 当前用户聊天群
 export interface ISelectGroupChat {
