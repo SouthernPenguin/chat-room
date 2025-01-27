@@ -1,4 +1,4 @@
-import { ChatType } from '@/app/lib/type/enmu';
+import { ChatType } from '@/app/types/enmu';
 
 /**
  * 聊天上传文件

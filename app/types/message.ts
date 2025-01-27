@@ -1,4 +1,4 @@
-import { ChatType, MessageEnum } from '@/app/lib/type/enmu';
+import { ChatType, MessageEnum } from '@/app/types/enmu';
 import { IUser } from '@/app/types/user';
 
 /**

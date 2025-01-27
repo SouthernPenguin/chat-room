@@ -3,8 +3,8 @@
  */
 import qs from 'qs';
 import { http } from '../server';
-import { MessageEnum } from '@/app/lib/type/enmu';
-import { ReturnListInterface } from '@/app/lib/type/publiceType';
+import { MessageEnum } from '@/app/types/enmu';
+import { ReturnListInterface } from '@/app/types/publiceType';
 import type { InternalAxiosRequestConfig } from 'axios';
 import { IUser } from '@/app/types/user';
 import { IMessageHistory, IMessageHistoryList, IOneByOneSendMessage } from '@/app/types/message';

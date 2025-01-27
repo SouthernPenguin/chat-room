@@ -1,5 +1,5 @@
-import { SearchPageInterface } from '@/app/lib/type/publiceType';
-import { FriendShipEnum } from '@/app/lib/type/enmu';
+import { SearchPageInterface } from '@/app/types/publiceType';
+import { FriendShipEnum } from '@/app/types/enmu';
 import { IUser } from '@/app/types/user';
 
 // 查找好友

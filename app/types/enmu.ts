@@ -1,4 +1,3 @@
-
 // 添加好友状态
 export enum FriendShipEnum {
   发起 = 'INITIATE', // 发起

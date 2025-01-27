@@ -7,7 +7,7 @@ import TextArea from 'antd/es/input/TextArea';
 
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 
-import { ChatType } from '@/app/lib/type/enmu';
+import { ChatType } from '@/app/types/enmu';
 import { chatUploadUrl } from '@/app/lib/api/upload';
 
 import socket from '@/app/utils/socket/socket';

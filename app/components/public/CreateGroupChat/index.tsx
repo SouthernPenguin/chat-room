@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Checkbox, Input, message, Modal } from 'antd';
-import { IProps } from '@/app/lib/type/modalProps';
+import { IProps } from '@/app/types/modalProps';
 import { friendList } from '@/app/lib/api/friend';
 import { creatGroupChat } from '@/app/lib/api/groupChat';
 import { IUser } from '@/app/types/user';

@@ -1,6 +1,6 @@
 'use client';
 import { findFriend } from '@/app/lib/api/friend';
-import { SearchPageInterface } from '@/app/lib/type/publiceType';
+import { SearchPageInterface } from '@/app/types/publiceType';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Input, Modal, Button, Skeleton, Divider, Empty, Spin } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
@@ -8,7 +8,7 @@ import type { DraggableData, DraggableEvent } from 'react-draggable';
 import Draggable from 'react-draggable';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ApplyAorFriends from './ApplyAorFriends';
-import { IProps } from '@/app/lib/type/modalProps';
+import { IProps } from '@/app/types/modalProps';
 import { IUser } from '@/app/types/user';
 
 interface ISelectItem {

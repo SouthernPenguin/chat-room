@@ -1,5 +1,5 @@
 import { http } from '@/app/lib/server';
-import { ReturnListInterface } from '@/app/lib/type/publiceType';
+import { ReturnListInterface } from '@/app/types/publiceType';
 import { IMessageList } from '@/app/types/notice';
 
 /**

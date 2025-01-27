@@ -4,7 +4,7 @@
 
 import qs from 'qs';
 import { http } from '../server';
-import { ReturnListInterface, SearchPageInterface } from '@/app/lib/type/publiceType';
+import { ReturnListInterface, SearchPageInterface } from '@/app/types/publiceType';
 import {
   IChatMessageHistoryList,
   ICreatGroupChat,

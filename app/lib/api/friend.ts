@@ -3,7 +3,7 @@
  */
 import qs from 'qs';
 import { http } from '../server';
-import { ReturnListInterface } from '../type/publiceType';
+import { ReturnListInterface } from '../../types/publiceType';
 import { IUser } from '@/app/types/user';
 import { IAddFriend, IAddFriendReturn, IAwaitFriendsReturn, IFriendList } from '@/app/types/friend';
 

@@ -1,4 +1,4 @@
-import { MessageEnum } from '@/app/lib/type/enmu';
+import { MessageEnum } from '@/app/types/enmu';
 import { IUser } from '@/app/types/user';
 import { IOneByOneSendMessage } from '@/app/types/message';
 
