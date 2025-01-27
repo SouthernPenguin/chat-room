@@ -8,13 +8,13 @@ import UserItem from '../userItem';
 import './index.scss';
 import useSocket from '@/app/store/socketStore';
 import { friendList } from '@/app/lib/api/friend';
-import { ILogin } from '@/app/lib/api/login';
 import { groupChatList } from '@/app/lib/api/groupChat';
 import { ISelectGroupChat } from '@/app/types/groupChat';
+import { IUser } from '@/app/types/user';
 
 const SideNav = () => {
   const [segmentedValue, setSegmentedValue] = useState<string>('好友');
-  const [list, setList] = useState<ILogin[]>([]);
+  const [list, setList] = useState<IUser[]>([]);
   const [groupList, setGroupList] = useState<ISelectGroupChat[]>([]);
   const { awaitFriendsNumber } = useSocket();
 

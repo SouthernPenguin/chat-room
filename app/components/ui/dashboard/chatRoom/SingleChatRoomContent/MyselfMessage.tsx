@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { toLocalTime } from '@/app/utils';
 import { IMessageHistoryList, revokeMessage } from '@/app/lib/api/message';
-import { ILogin } from '@/app/lib/api/login';
-import { Dropdown, MenuProps, message, Image } from 'antd';
+import { Dropdown, MenuProps, message } from 'antd';
 import { CopyOutlined, RollbackOutlined, SaveOutlined } from '@ant-design/icons';
 import { AllowedOfficeTypes } from '@/app/utils/constant';
 import { downFiles } from '@/app/lib/api/down';
 import { useMessageEl } from './useMessageEl';
+import { IUser } from '@/app/types/user';
 
 export interface IProps {
   item: IMessageHistoryList;
-  user: ILogin;
+  user: IUser;
 }
 
 const MyselfMessage = (props: IProps) => {

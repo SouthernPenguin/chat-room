@@ -4,18 +4,18 @@
 import qs from 'qs';
 import { http } from '../server';
 import { ReturnListInterface, SearchPageInterface } from '../type/publiceType';
-import { ILogin } from './login';
 import { FriendShipEnum } from '../type/enmu';
+import { IUser } from '@/app/types/user';
 
 // 好友列表
-export const friendList = () => http.get<ReturnListInterface<ILogin[]>>('/friend-ship/list');
+export const friendList = () => http.get<ReturnListInterface<IUser[]>>('/friend-ship/list');
 
 // 查找好友
 interface IFriendList extends SearchPageInterface {
   name: string;
 }
 export const findFriend = (params: IFriendList) =>
-  http.get<ReturnListInterface<ILogin[]>>('/friend-ship?' + qs.stringify(params));
+  http.get<ReturnListInterface<IUser[]>>('/friend-ship?' + qs.stringify(params));
 
 // 添加好友
 interface IAddFriend {
@@ -36,7 +36,7 @@ export const addFriend = (data: IAddFriend) => http.post<ReturnListInterface<IAd
 
 // 等待通过好友验证列表
 export interface IAwaitFriendsReturn extends IAddFriendReturn {
-  fromUser: ILogin;
+  fromUser: IUser;
 }
 export const awaitFriends = () => http.get<ReturnListInterface<IAwaitFriendsReturn[]>>('/friend-ship/awaitFriend');
 

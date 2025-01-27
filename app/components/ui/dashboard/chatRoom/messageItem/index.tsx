@@ -4,9 +4,8 @@ import Link from 'next/link';
 import { IMessageList } from '@/app/lib/api/notice';
 import useUserStore from '@/app/store/user';
 import { calcDate } from '@/app/utils';
-import { Simulate } from 'react-dom/test-utils';
 import { ChatType } from '@/app/lib/type/enmu';
-import { ILogin } from '@/app/lib/api/login';
+import { IUser } from '@/app/types/user';
 
 interface IProps {
   id: number;
@@ -16,7 +15,7 @@ const MessageItem = (props: IProps) => {
   const { user } = useUserStore();
 
   if (props.userItem.msgType === ChatType.私聊) {
-    const toUser: ILogin = user.id !== props.userItem.toUser.id ? props.userItem.toUser : props.userItem.fromUser;
+    const toUser: IUser = user.id !== props.userItem.toUser.id ? props.userItem.toUser : props.userItem.fromUser;
     return (
       <Link href={'/dashboard/chatRoom/singleChatRoom/' + toUser.id}>
         <div

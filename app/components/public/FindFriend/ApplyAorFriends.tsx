@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, message, Modal } from 'antd';
 import Draggable, { type DraggableData, type DraggableEvent } from 'react-draggable';
-import { ILogin } from '@/app/lib/api/login';
 import TextArea from 'antd/es/input/TextArea';
 import useUserStore from '@/app/store/user';
 import { addFriend } from '@/app/lib/api/friend';
+import { IUser } from '@/app/types/user';
 
 interface IProps {
   show: boolean;
-  userInfo?: ILogin;
+  userInfo?: IUser;
   closeOpen: () => void;
 }
 // 定义验证模式

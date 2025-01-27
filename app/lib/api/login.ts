@@ -3,19 +3,12 @@
  */
 
 import { http } from '../server';
+import { IUser } from '@/app/types/user';
 
 // 登录
-export interface ILogin {
-  id: number;
-  name: string;
-  nickname: string | null;
-  headerImg: string | undefined;
-  gender: number | null;
-  isCheck?: boolean;
-}
 export function login(data: { name: string; password: string }) {
   return http.post<{
-    userInfo: ILogin;
+    userInfo: IUser;
     token: string;
     refreshToken: string;
   }>('/auth/login', data);
@@ -25,7 +18,7 @@ export function login(data: { name: string; password: string }) {
 
 export function register(data: { name: string; password: string }) {
   return http.post<{
-    userInfo: ILogin;
+    userInfo: IUser;
   }>('/auth/register', data);
 }
 

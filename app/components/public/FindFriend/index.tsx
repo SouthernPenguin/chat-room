@@ -1,6 +1,5 @@
 'use client';
 import { findFriend } from '@/app/lib/api/friend';
-import { ILogin } from '@/app/lib/api/login';
 import { SearchPageInterface } from '@/app/lib/type/publiceType';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Input, Modal, Button, Skeleton, Divider, Empty, Spin } from 'antd';
@@ -10,10 +9,11 @@ import Draggable from 'react-draggable';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ApplyAorFriends from './ApplyAorFriends';
 import { IProps } from '@/app/lib/type/modalProps';
+import { IUser } from '@/app/types/user';
 
 interface ISelectItem {
   show: boolean;
-  userInfo?: ILogin;
+  userInfo?: IUser;
 }
 
 const FindFriend = (props: IProps) => {
@@ -22,7 +22,7 @@ const FindFriend = (props: IProps) => {
   const [bounds, setBounds] = useState({ left: 0, top: 0, bottom: 0, right: 0 });
   const draggableRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [findFriendList, setFindFriendList] = useState<ILogin[]>([]);
+  const [findFriendList, setFindFriendList] = useState<IUser[]>([]);
   const [pages, setPages] = useState<{
     totalElements: number;
     totalPages: number;

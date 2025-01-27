@@ -1,7 +1,7 @@
 import { http } from '@/app/lib/server';
-import { ILogin } from '@/app/lib/api/login';
 import { ChatType, MessageEnum } from '@/app/lib/type/enmu';
 import { ReturnListInterface } from '@/app/lib/type/publiceType';
+import { IUser } from '@/app/types/user';
 
 /**
  * 当前用户聊天列表
@@ -17,8 +17,8 @@ export interface IMessageList {
   fromUserId: number;
   toUserId: number;
   groupId: number;
-  toUser: ILogin;
-  fromUser: ILogin;
+  toUser: IUser;
+  fromUser: IUser;
   toUsers: {
     id: number;
     name: string;

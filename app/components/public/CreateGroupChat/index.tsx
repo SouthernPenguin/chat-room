@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Button, Checkbox, Input, message, Modal } from 'antd';
 import { IProps } from '@/app/lib/type/modalProps';
 import { friendList } from '@/app/lib/api/friend';
-import { ILogin } from '@/app/lib/api/login';
 import { creatGroupChat } from '@/app/lib/api/groupChat';
+import { IUser } from '@/app/types/user';
 
 const CreateGroupChat = (props: IProps) => {
   const [open, setOpen] = useState(false);
-  const [toBeSelected, setToBeSelected] = useState<ILogin[]>([]);
-  const [selectedList, setSelectedList] = useState<ILogin[]>([]);
+  const [toBeSelected, setToBeSelected] = useState<IUser[]>([]);
+  const [selectedList, setSelectedList] = useState<IUser[]>([]);
 
   useEffect(() => {
     if (props.show) {
@@ -57,9 +57,9 @@ const CreateGroupChat = (props: IProps) => {
     setSelectedList([...newTobeSelected.filter(s => s.isCheck)]);
   };
 
-  const removeSelectItem = (item: ILogin, index: number) => {
+  const removeSelectItem = (item: IUser, index: number) => {
     const newSelectedList = [...selectedList];
-    const moveItem: ILogin = newSelectedList.splice(index, 1)[0];
+    const moveItem: IUser = newSelectedList.splice(index, 1)[0];
     toBeSelected.forEach(item => {
       if (item.id === moveItem.id) {
         item.isCheck = false;
@@ -92,7 +92,7 @@ const CreateGroupChat = (props: IProps) => {
             <Input placeholder="Basic usage" size="small" className="mb-3" />
 
             {toBeSelected.length &&
-              toBeSelected.map((item: ILogin, index: number) => {
+              toBeSelected.map((item: IUser, index: number) => {
                 return (
                   <div
                     key={item.id}
@@ -114,7 +114,7 @@ const CreateGroupChat = (props: IProps) => {
               <p className="text-gray-400">已选{selectedList.length}联系人</p>
             </div>
             {selectedList.length &&
-              selectedList.map((item: ILogin, index: number) => {
+              selectedList.map((item: IUser, index: number) => {
                 return (
                   <div
                     key={item.id}

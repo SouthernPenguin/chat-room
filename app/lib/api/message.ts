@@ -5,8 +5,8 @@ import qs from 'qs';
 import { http } from '../server';
 import { ChatType, MessageEnum } from '@/app/lib/type/enmu';
 import { ReturnListInterface } from '@/app/lib/type/publiceType';
-import { ILogin } from '@/app/lib/api/login';
 import type { InternalAxiosRequestConfig } from 'axios';
+import { IUser } from '@/app/types/user';
 
 /**
  * 发送消息
@@ -36,7 +36,7 @@ export interface IMessageHistoryList {
   postMessage: string;
   originalFileName: string;
   state: MessageEnum;
-  toUser: ILogin;
+  toUser: IUser;
 }
 
 export const messageHistoryList = (query: IMessageHistory) =>

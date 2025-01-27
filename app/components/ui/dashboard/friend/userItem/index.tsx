@@ -1,12 +1,12 @@
 import React from 'react';
 import './index.scss';
-import { ILogin } from '@/app/lib/api/login';
 import useUserStore from '@/app/store/user';
 import { ISelectGroupChat } from '@/app/types/groupChat';
+import { IUser } from '@/app/types/user';
 
 interface IProps {
   userOrGroup: boolean;
-  userItem?: ILogin | undefined;
+  userItem?: IUser | undefined;
   groupItem?: ISelectGroupChat;
 }
 

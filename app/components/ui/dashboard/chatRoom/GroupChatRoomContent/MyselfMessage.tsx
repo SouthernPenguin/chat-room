@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { toLocalTime } from '@/app/utils';
-import { ILogin } from '@/app/lib/api/login';
 import { Dropdown, MenuProps, message } from 'antd';
 import { CopyOutlined, RollbackOutlined, SaveOutlined } from '@ant-design/icons';
 import { useMessageEl } from './useMessageEl';
@@ -8,10 +7,11 @@ import { revokeMessage } from '@/app/lib/api/groupChat';
 import { downFiles } from '@/app/lib/api/down';
 import { AllowedOfficeTypes } from '@/app/utils/constant';
 import { IChatMessageHistoryList } from '@/app/types/groupChat';
+import { IUser } from '@/app/types/user';
 
 export interface IProps {
   item: IChatMessageHistoryList;
-  user: ILogin;
+  user: IUser;
 }
 
 const MyselfMessage = (props: IProps) => {

@@ -1,6 +1,6 @@
-import { ILogin } from '@/app/lib/api/login';
 import { MessageEnum } from '@/app/lib/type/enmu';
 import { IOneByOneSendMessage } from '@/app/lib/api/message';
+import { IUser } from '@/app/types/user';
 
 // 当前用户聊天群
 export interface ISelectGroupChat {
@@ -20,8 +20,8 @@ export interface ICreatGroupChatGroupReturn {
   id: number;
   name: string;
   notice: string | null;
-  users: ILogin[];
-  createdUserId: ILogin;
+  users: IUser[];
+  createdUserId: IUser;
 }
 
 // 群聊天记录
@@ -30,7 +30,7 @@ export interface IChatMessageHistoryList {
   fileSize: null;
   fileType: null;
   fromUserId: number;
-  fromUser: ILogin;
+  fromUser: IUser;
   groupId: number;
   id: number;
   postMessage: string;

@@ -1,19 +1,19 @@
 import { create } from 'zustand';
-import { ILogin } from '../lib/api/login';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { ISelectGroupChat } from '@/app/types/groupChat';
+import { IUser } from '@/app/types/user';
 
-export interface ISelectUserInfo extends ILogin {
+export interface ISelectUserInfo extends IUser {
   headerImages?: string[];
 }
 
 export type IGroupItem = Pick<ISelectUserInfo, 'headerImages' | 'name' | 'id'>;
 
 interface State {
-  user: ILogin;
+  user: IUser;
   selectUserInfo: ISelectUserInfo;
   // 用户
-  setUserInfo: (info: ILogin) => void;
+  setUserInfo: (info: IUser) => void;
   setSelectUserInfo: (info: ISelectUserInfo) => void;
 
   selectGroupInfo: ISelectGroupChat;
@@ -33,7 +33,7 @@ const useUserStore = create<State>()(
   persist(
     (set, get) => ({
       user: { id: -1, name: '', nickname: '', headerImg: '', gender: -1 },
-      setUserInfo: (info: ILogin) => set(() => ({ user: Object.assign(get().user, info) })),
+      setUserInfo: (info: IUser) => set(() => ({ user: Object.assign(get().user, info) })),
 
       selectUserInfo: { id: -1, name: '', nickname: '', headerImg: '', gender: -1 },
       typeUserOrGroupChat: -1,
@@ -54,7 +54,7 @@ export default useUserStore;
 
 // export const useBearStore = create<BearState>()(set => ({
 //   user: { id: -1, name: '', nickname: '', headerImg: '', gender: -1 },
-//   setUserInfo: (info: ILogin) => set(state => ({ user: Object.assign(state.user, info) })),
+//   setUserInfo: (info: IUser) => set(state => ({ user: Object.assign(state.user, info) })),
 //   // addArr: (item: string) => set(state => ({ list: [...state.list, item] })),
 //   // popArr: () => set(state => ({ list: state.list.slice(0, -1) })),
 //   // increase: (by: number) => set(state => ({ bears: state.bears + by })),
