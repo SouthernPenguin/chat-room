@@ -1,13 +1,14 @@
 'use client';
 import { Button, Empty } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { agreeVerification, awaitFriends, IAwaitFriendsReturn } from '@/app/lib/api/friend';
+import { agreeVerification, awaitFriends } from '@/app/lib/api/friend';
 import { toLocalTime } from '@/app/utils';
 import { FriendShipEnum } from '@/app/lib/type/enmu';
 import useSocket from '@/app/store/socketStore';
 import { ReturnListInterface } from '@/app/lib/type/publiceType';
 import socket from '@/app/utils/socket/socket';
 import { AwaitFriend } from '@/app/utils/socket';
+import { IAwaitFriendsReturn } from '@/app/types/friend';
 
 const FriendNotice = () => {
   const [awaitList, setAwaitList] = useState<IAwaitFriendsReturn[]>();

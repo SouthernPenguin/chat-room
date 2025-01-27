@@ -7,11 +7,11 @@ import './index.scss';
 import { signOut } from 'next-auth/react';
 import useSocket from '@/app/store/socketStore';
 import socket from '@/app/utils/socket/socket';
-import { IAwaitFriendsReturn } from '@/app/lib/api/friend';
 import { ReturnListInterface } from '@/app/lib/type/publiceType';
 import { FriendShipEnum } from '@/app/lib/type/enmu';
 import { AwaitFriend } from '@/app/utils/socket';
 import { allLocalStorageMove } from '@/app/utils';
+import { IAwaitFriendsReturn } from '@/app/types/friend';
 
 const SideNav: React.FC = () => {
   const { awaitFriendsNumber, setAwaitFriendsNumber } = useSocket();
