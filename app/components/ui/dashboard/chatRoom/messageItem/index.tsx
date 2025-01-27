@@ -1,11 +1,11 @@
 import React from 'react';
 import './index.scss';
 import Link from 'next/link';
-import { IMessageList } from '@/app/lib/api/notice';
 import useUserStore from '@/app/store/user';
 import { calcDate } from '@/app/utils';
 import { ChatType } from '@/app/lib/type/enmu';
 import { IUser } from '@/app/types/user';
+import { IMessageList } from '@/app/types/notice';
 
 interface IProps {
   id: number;

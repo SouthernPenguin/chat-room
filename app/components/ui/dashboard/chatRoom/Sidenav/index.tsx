@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import MessageItem from '../messageItem';
 import ListSearch from '@/app/components/public/ListSearch';
-import { IMessageList, messageList } from '@/app/lib/api/notice';
+import { messageList } from '@/app/lib/api/notice';
 import socket from '@/app/utils/socket/socket';
 import { ActiveUserNoticeList } from '@/app/utils/socket';
+import { IMessageList } from '@/app/types/notice';
 
 const SideNav: React.FC = () => {
   const [userMessageList, setUserMessageList] = useState<IMessageList[]>([]);
