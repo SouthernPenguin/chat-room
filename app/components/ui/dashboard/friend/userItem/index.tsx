@@ -1,28 +1,31 @@
 import React from 'react';
 import './index.scss';
 import { ILogin } from '@/app/lib/api/login';
-import useUserStore, { IGroupItem, ISelectUserInfo } from '@/app/store/user';
-import { stringCapture } from '@/app/utils';
+import useUserStore from '@/app/store/user';
+import { ISelectGroupChat } from '@/app/types/groupChat';
 
 interface IProps {
   userOrGroup: boolean;
   userItem?: ILogin | undefined;
-  groupItem?: IGroupItem;
+  groupItem?: ISelectGroupChat;
 }
 
 const UserItem = (props: IProps) => {
   const { userOrGroup, userItem, groupItem } = props;
 
-  const { setType, setSelectUserInfo } = useUserStore();
+  const { setType, setSelectUserInfo, setSelectedGroup } = useUserStore();
 
   const goDetail = () => {
     setType(userOrGroup ? 2 : 1);
+
+    // 用户
     if (userItem && !userOrGroup) {
       setSelectUserInfo(userItem);
     }
 
+    // 群聊
     if (groupItem && userOrGroup) {
-      setSelectUserInfo(groupItem as ISelectUserInfo);
+      setSelectedGroup(groupItem);
     }
   };
   return (
@@ -35,21 +38,20 @@ const UserItem = (props: IProps) => {
       <div className="flex items-center  w-2/3">
         {/* 群聊 */}
         {userOrGroup && (
-          <>
-            <div className="rounded-full w-14 h-14 w- mr-3">
-              <ul className="rounded-full flex  justify-around flex-wrap-reverse items-center  w-full h-full overflow-hidden">
-                {groupItem?.headerImages &&
-                  groupItem.headerImages.map((item, index) => {
-                    return (
-                      <li className="w-4 h-4" key={index}>
-                        <img src={item} alt="无图片" />
-                      </li>
-                    );
-                  })}
-              </ul>
-            </div>
-            <div className="dark:text-white   text-ellipsis overflow-hidden ...">{stringCapture(groupItem?.name)}</div>
-          </>
+          // <>
+          //   <div className="rounded-full w-14 h-14 w- mr-3">
+          //     <ul className="rounded-full flex  justify-around flex-wrap-reverse items-center  w-full h-full overflow-hidden">
+          //       {groupItem?.headerImages &&
+          //         groupItem.headerImages.map((item, index) => {
+          //           return (
+          //             <li className="w-4 h-4" key={index}>
+          //               <img src={item} alt="无图片" />
+          //             </li>
+          //           );
+          //         })}
+          //     </ul>
+          //   </div>     </>
+          <div className="dark:text-white   text-ellipsis overflow-hidden ...">{groupItem!.name}</div>
         )}
 
         {/* 用户 */}

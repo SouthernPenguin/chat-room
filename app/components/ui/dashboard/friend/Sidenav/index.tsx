@@ -9,12 +9,13 @@ import './index.scss';
 import useSocket from '@/app/store/socketStore';
 import { friendList } from '@/app/lib/api/friend';
 import { ILogin } from '@/app/lib/api/login';
-import { groupChatList, IGroupChatList } from '@/app/lib/api/groupChat';
+import { groupChatList } from '@/app/lib/api/groupChat';
+import { ISelectGroupChat } from '@/app/types/groupChat';
 
 const SideNav = () => {
   const [segmentedValue, setSegmentedValue] = useState<string>('好友');
   const [list, setList] = useState<ILogin[]>([]);
-  const [groupList, setGroupList] = useState<IGroupChatList[]>([]);
+  const [groupList, setGroupList] = useState<ISelectGroupChat[]>([]);
   const { awaitFriendsNumber } = useSocket();
 
   useEffect(() => {
@@ -90,18 +91,7 @@ const SideNav = () => {
           <div>
             {groupList.length &&
               groupList.map(item => {
-                return (
-                  <Link href="/dashboard/friend" key={item.id}>
-                    <UserItem
-                      userOrGroup={true}
-                      groupItem={{
-                        id: item.id,
-                        name: item.name,
-                        headerImages: item.users.map(value => value.headerImg).splice(0, 8) as string[],
-                      }}
-                    />
-                  </Link>
-                );
+                return <UserItem key={item.id} userOrGroup={true} groupItem={item} />;
               })}
           </div>
         )}

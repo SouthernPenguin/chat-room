@@ -17,8 +17,8 @@ import useUserStore from '@/app/store/user';
 import MyselfMessage from './MyselfMessage';
 import CounterpartMessage from './CounterpartMessage';
 
-import { groupChatHistory, IChatMessageHistoryList, sendMessage } from '@/app/lib/api/groupChat';
-import SendingMessages from '@/app/components/public/SendingMessages';
+import { groupChatHistory, sendMessage } from '@/app/lib/api/groupChat';
+import { IChatMessageHistoryList } from '@/app/types/groupChat';
 
 const ChatContent: React.FC = () => {
   const { selectUserInfo, user } = useUserStore();

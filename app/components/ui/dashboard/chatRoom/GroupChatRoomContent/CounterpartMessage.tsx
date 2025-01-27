@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { toLocalTime } from '@/app/utils';
-import { Dropdown, Image, MenuProps, message } from 'antd';
-import { CopyOutlined, RollbackOutlined, SaveOutlined } from '@ant-design/icons';
+import { Dropdown, MenuProps, message } from 'antd';
+import { CopyOutlined, SaveOutlined } from '@ant-design/icons';
 import { ISelectUserInfo } from '@/app/store/user';
 import { useMessageEl } from './useMessageEl';
-import { IChatMessageHistoryList } from '@/app/lib/api/groupChat';
 import { AllowedOfficeTypes } from '@/app/utils/constant';
+import { IChatMessageHistoryList } from '@/app/types/groupChat';
 
 export interface IProps {
   item: IChatMessageHistoryList;

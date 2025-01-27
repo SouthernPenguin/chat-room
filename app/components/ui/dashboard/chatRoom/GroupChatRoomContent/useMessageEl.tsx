@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { Image } from 'antd';
 import { AllowedImageTypes, AllowedOfficeTypes } from '@/app/utils/constant';
-import { IChatMessageHistoryList } from '@/app/lib/api/groupChat';
+import { IChatMessageHistoryList } from '@/app/types/groupChat';
 
 export const useMessageEl = (item: IChatMessageHistoryList) => {
   const [displayContent, setDisplayContent] = useState<any>(null);
