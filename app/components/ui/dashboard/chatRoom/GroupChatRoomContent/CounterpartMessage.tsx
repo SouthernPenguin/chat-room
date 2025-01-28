@@ -54,7 +54,9 @@ const CounterpartMessage = (props: IProps) => {
     <div className="w-full">
       <div className="flex max-w-[50%]">
         <img src={item.fromUser.headerImg} className="rounded-full bg-gray-500 w-9 h-9 mr-3" alt="无图片" />
-        <div onContextMenu={() => handleRightClick(item)}>
+
+        <div className="mb-2" onContextMenu={() => handleRightClick(item)}>
+          <span>{item.fromUser.name}</span>
           <Dropdown menu={{ items, onClick }} trigger={['contextMenu']}>
             <div
               className="bg-white rounded-r-3xl rounded-bl-3xl p-2 w-screen-md shadow-lg  dark:bg-mainBackground dark:text-white mb-1"
