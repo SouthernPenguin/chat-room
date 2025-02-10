@@ -18,6 +18,7 @@ import useUserStore from '@/app/store/user';
 
 import MyselfMessage from './MyselfMessage';
 import CounterpartMessage from './CounterpartMessage';
+import SendingMessages from '@/app/components/public/SendingMessages';
 
 const ChatContent: React.FC = () => {
   const { selectUserInfo, user } = useUserStore();
@@ -30,17 +31,15 @@ const ChatContent: React.FC = () => {
 
   const params = useParams<Params>();
 
-  const [textareaValue, setTextareaValue] = useState<string>('');
   const scrollableDivRef = useRef(null);
 
-  const send = async () => {
+  const send = async (textareaValue: string) => {
     const res = await sendMessage({
       postMessage: textareaValue,
       msgType: ChatType.私聊,
       toUserId: params.id * 1,
     });
     if (res.success) {
-      setTextareaValue('');
       scrollableDivRefFn();
     }
   };
@@ -168,28 +167,7 @@ const ChatContent: React.FC = () => {
           </div>
 
           {/* 发送消息 */}
-          <div className="w-full flex justify-center min-h-16 mt-2">
-            <div className="w-[70%]   flex justify-between items-end">
-              <div className="flex justify-center  w-10 h-10 border text-gray-400 text-2xl text-center rounded-full">
-                <Upload {...UpLoadProps}>
-                  <ToTopOutlined />
-                </Upload>
-              </div>
-
-              <div className="w-full pl-3 pr-3">
-                <TextArea
-                  value={textareaValue}
-                  onChange={e => setTextareaValue(e.target.value)}
-                  placeholder="Controlled autosize"
-                  autoSize={{ minRows: 2, maxRows: 5 }}
-                />
-              </div>
-
-              <div className="flex justify-center  w-10 h-10 border text-gray-400 text-2xl text-center rounded-full">
-                <ArrowUpOutlined onClick={send} />
-              </div>
-            </div>
-          </div>
+          <SendingMessages upLoadProps={UpLoadProps} sendTextareaValue={send} />
         </div>
 
         {/* <div className="bg-slate-800 w-60">详细信息33</div> */}

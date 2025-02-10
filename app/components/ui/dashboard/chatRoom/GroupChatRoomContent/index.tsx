@@ -19,6 +19,7 @@ import CounterpartMessage from './CounterpartMessage';
 
 import { groupChatHistory, sendMessage } from '@/app/lib/api/groupChat';
 import { IChatMessageHistoryList } from '@/app/types/groupChat';
+import SendingMessages from '@/app/components/public/SendingMessages';
 
 const ChatContent: React.FC = () => {
   const { selectGroupInfo, user } = useUserStore();
@@ -31,17 +32,15 @@ const ChatContent: React.FC = () => {
 
   const params = useParams<Params>();
 
-  const [textareaValue, setTextareaValue] = useState<string>('');
   const scrollableDivRef = useRef(null);
 
-  const send = async () => {
+  const send = async (str: string) => {
     const res = await sendMessage({
-      postMessage: textareaValue,
+      postMessage: str,
       msgType: ChatType.群聊,
       groupId: params.id * 1,
     });
     if (res.success) {
-      setTextareaValue('');
       scrollableDivRefFn();
     }
   };
@@ -146,6 +145,7 @@ const ChatContent: React.FC = () => {
             </div>
           </div>
 
+          {/*内容区域*/}
           <div
             ref={scrollableDivRef}
             style={{ height: 'calc(100% - 4rem - 3.5rem - 1.25rem - 0.5rem)' }}
@@ -169,34 +169,8 @@ const ChatContent: React.FC = () => {
           </div>
 
           {/* 发送消息 */}
-          <div className="w-full flex justify-center min-h-16  p-2">
-            <div className="w-[70%] flex justify-between items-center border pb-8">
-              <div className="flex justify-center w-[40px] h-[40px]  border text-gray-400 text-2xl text-center rounded-full">
-                <Upload {...UpLoadProps}>
-                  <ToTopOutlined />
-                </Upload>
-              </div>
-
-              <div className="w-full pl-3 pr-3">
-                {/*<div className="max-h-52 max  w-full">*/}
-                {/*  <SendingMessages />*/}
-                {/*</div>*/}
-
-                <TextArea
-                  value={textareaValue}
-                  onChange={e => setTextareaValue(e.target.value)}
-                  placeholder="Controlled autosize"
-                  autoSize={{ minRows: 2, maxRows: 5 }}
-                />
-                <div className="flex justify-center  w-10 h-10 border text-gray-400 text-2xl text-center rounded-full">
-                  <ArrowUpOutlined onClick={send} />
-                </div>
-              </div>
-            </div>
-          </div>
+          <SendingMessages upLoadProps={UpLoadProps} sendTextareaValue={send} />
         </div>
-
-        {/* <div className="bg-slate-800 w-60">详细信息33</div> */}
       </div>
     </div>
   );

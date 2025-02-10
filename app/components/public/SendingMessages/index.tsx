@@ -1,25 +1,48 @@
 'use client';
-import React from 'react';
-import style from './index.module.css';
+import React, { useState } from 'react';
 import TextArea from 'antd/es/input/TextArea';
+import { ArrowUpOutlined, ToTopOutlined } from '@ant-design/icons';
+import { message, Upload, UploadProps } from 'antd';
 
-const SendingMessages: React.FC = () => {
-  const [textareaValue, setTextareaValue] = React.useState<string>('');
+interface IProps {
+  upLoadProps: UploadProps;
+  sendTextareaValue: (str: string) => void;
+}
+const SendingMessages = (props: IProps) => {
+  const { upLoadProps, sendTextareaValue } = props;
+
+  const [textareaValue, setTextareaValue] = useState<string>('');
+  const send = () => {
+    if (!textareaValue) {
+      message.error('请输入内容');
+      return;
+    }
+    sendTextareaValue(textareaValue);
+    setTextareaValue('');
+  };
   return (
-    <div className={style['a-textarea']}>
-      {/*<TextArea*/}
-      {/*  className="textarea"*/}
-      {/*  value={textareaValue}*/}
-      {/*  onChange={e => setTextareaValue(e.target.value)}*/}
-      {/*  placeholder="Controlled autosize"*/}
-      {/*  autoSize={{ minRows: 2, maxRows: 5 }}*/}
-      {/*/>*/}
-      <textarea
-        value={textareaValue}
-        className={style['textarea']}
-        onChange={e => setTextareaValue(e.target.value)}
-      ></textarea>
-      <pre className={style['hidden-box']}>{textareaValue}</pre>
+    <div className="w-[50%] fixed right-[12%] box-border rounded-lg bottom-1 dark:bg-black  20  bg-gray-200">
+      <div className="w-11/12 m-auto pt-1 pb-1">
+        <TextArea
+          value={textareaValue}
+          onChange={e => setTextareaValue(e.target.value)}
+          placeholder="请输入内容"
+          autoSize={{ minRows: 2, maxRows: 8 }}
+          className="bg-transparent border-none hover:bg-transparent hover:border-none"
+        />
+
+        <div className="justify-end flex mt-2">
+          <div className="  text-white rounded-full w-9 h-9 text-center  flex justify-center items-center">
+            <Upload {...upLoadProps}>
+              <ToTopOutlined className="text-2xl " />
+            </Upload>
+          </div>
+
+          <div className="bg-red-400 text-white rounded-full w-9 h-9 text-center text-2xl  flex justify-center items-center">
+            <ArrowUpOutlined onClick={send} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
