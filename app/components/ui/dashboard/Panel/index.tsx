@@ -9,7 +9,7 @@ const Panel = () => {
   const [userInformPanel, setUserInformPanel] = useState<IUserInformPanel>({});
   useEffect(() => {
     getPanel();
-  });
+  }, []);
 
   const getPanel = async () => {
     const res = await getUserInformPanel();
