@@ -7,3 +7,8 @@ import { ChatType } from '@/app/types/enmu';
  */
 export const chatUploadUrl = (toUserId: number, msgType: ChatType) =>
   `/api/upload/upLoadMessage?toUserId=${toUserId}&msgType=${msgType}`;
+
+/**
+ * 用户头像上传
+ */
+export const upLoadUserImage = '/api/upload/upLoadUserImage';

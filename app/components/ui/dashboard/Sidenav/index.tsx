@@ -12,9 +12,11 @@ import { FriendShipEnum } from '@/app/types/enmu';
 import { AwaitFriend } from '@/app/utils/socket';
 import { allLocalStorageMove } from '@/app/utils';
 import { IAwaitFriendsReturn } from '@/app/types/friend';
+import { useRouter } from 'next/navigation';
 
 const SideNav: React.FC = () => {
   const { awaitFriendsNumber, setAwaitFriendsNumber } = useSocket();
+  const router = useRouter();
 
   useEffect(() => {
     function onAwaitFriend(res: ReturnListInterface<IAwaitFriendsReturn[]>) {
@@ -34,10 +36,13 @@ const SideNav: React.FC = () => {
     signOut({ callbackUrl: '/signin' });
   };
 
+  const toPanel = () => {
+    router.push('/dashboard');
+  };
   return (
     <div className="dark:bg-black w-20 bg-mainBackground h-full overflow-hidden flex flex-col justify-between pb-3">
       <div>
-        <div className="text-center pt-5">
+        <div className="text-center pt-5" onClick={toPanel}>
           <Avatar size="large" icon={<UserOutlined />} />
         </div>
 

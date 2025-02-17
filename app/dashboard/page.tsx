@@ -1,3 +1,5 @@
+import Panel from '@/app/components/ui/dashboard/Panel';
+
 export default async function DashboardPage() {
-  return <h1>Welcome to the Dashboard!</h1>;
+  return <Panel />;
 }
