@@ -21,6 +21,18 @@ const UserFriendsInform = (props: IProps) => {
 
   const manWomen = () => {
     const chartInstance = echarts.init(manWomenRef.current);
+    let dataValue1 = 0;
+    let dataValue2 = 0;
+
+    const man = userFriendInformation.manWomamNumber.filter(item => item.gender === '男');
+    if (man.length) {
+      dataValue1 = man[0].number;
+    }
+
+    const woman = userFriendInformation.manWomamNumber.filter(item => item.gender === '女');
+    if (man.length) {
+      dataValue2 = woman[0].number;
+    }
     const option = {
       tooltip: {
         trigger: 'item',
@@ -57,12 +69,12 @@ const UserFriendsInform = (props: IProps) => {
           },
           data: [
             {
-              value: userFriendInformation.manWomamNumber.filter(item => item.gender === '男')[0].number,
+              value: dataValue1,
               name: '男',
               itemStyle: { color: 'rgb(115, 192, 222)' },
             },
             {
-              value: userFriendInformation.manWomamNumber.filter(item => item.gender === '女')[0].number,
+              value: dataValue2,
               name: '女',
               itemStyle: { color: 'pink' },
             },
