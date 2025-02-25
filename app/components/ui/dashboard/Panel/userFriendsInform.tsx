@@ -30,7 +30,7 @@ const UserFriendsInform = (props: IProps) => {
     }
 
     const woman = userFriendInformation.manWomamNumber.filter(item => item.gender === '女');
-    if (man.length) {
+    if (woman.length) {
       dataValue2 = woman[0].number;
     }
     const option = {
