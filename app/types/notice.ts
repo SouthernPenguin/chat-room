@@ -6,20 +6,20 @@ import { IUser } from '@/app/types/user';
  */
 export interface IMessageList {
   id: number;
-  friendMsgNumber: number;
-  userMsgNumber: number;
-  msgType: ChatType;
+  friendMsgNumber: null;
+  userMsgNumber: null;
+  msgType: string;
   updateTime: string;
-  state: MessageEnum;
-  newMessage: MessageEnum;
+  state: string;
+  newMessage: string;
   fromUserId: number;
   toUserId: number;
-  groupId: number;
-  toUser: IUser;
-  fromUser: IUser;
-  toUsers: {
-    id: number;
-    name: string;
-    notice: string;
-  };
+  groupId: null;
+  formUserName: string;
+  formUserHeaderImg: string;
+  formUserNickname: null;
+  toUserName: string;
+  toUserHeaderImg: string;
+  toUserNickname: string;
+  toUsersName: null;
 }

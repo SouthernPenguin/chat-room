@@ -6,8 +6,10 @@ import { messageList } from '@/app/lib/api/notice';
 import socket from '@/app/utils/socket/socket';
 import { ActiveUserNoticeList } from '@/app/utils/socket';
 import { IMessageList } from '@/app/types/notice';
+import useUserStore from '@/app/store/user';
 
 const SideNav: React.FC = () => {
+  const { user } = useUserStore();
   const [userMessageList, setUserMessageList] = useState<IMessageList[]>([]);
 
   useEffect(() => {
