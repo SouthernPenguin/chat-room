@@ -13,15 +13,19 @@ import { AwaitFriend } from '@/app/utils/socket';
 import { allLocalStorageMove } from '@/app/utils';
 import { IAwaitFriendsReturn } from '@/app/types/friend';
 import { useRouter } from 'next/navigation';
+import useUserStore from '@/app/store/user';
 
 const SideNav: React.FC = () => {
   const { awaitFriendsNumber, setAwaitFriendsNumber } = useSocket();
   const router = useRouter();
+  const { user } = useUserStore();
 
   useEffect(() => {
     function onAwaitFriend(res: ReturnListInterface<IAwaitFriendsReturn[]>) {
       if (res.content.length) {
-        setAwaitFriendsNumber(res.content.filter(item => item.state === FriendShipEnum.发起).length);
+        setAwaitFriendsNumber(
+          res.content.filter(item => item.friendId === user.id && item.state === FriendShipEnum.发起).length,
+        );
       }
     }
     socket.on(AwaitFriend, onAwaitFriend);
