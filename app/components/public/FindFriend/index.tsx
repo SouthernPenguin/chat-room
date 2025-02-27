@@ -69,14 +69,19 @@ const FindFriend = (props: IProps) => {
     }
   };
 
-  const getFindFriend = async (page: SearchPageInterface = { page: 1, limit: 10 }) => {
+  const getFindFriend = async (page: SearchPageInterface = { page: 1, limit: 10 }, flag: boolean = false) => {
     setLoading(true);
     try {
       const res = await findFriend({
         name: inputValue,
         ...page,
       });
-      setFindFriendList([...findFriendList, ...res.data.content]);
+      if (flag) {
+        setFindFriendList([...findFriendList, ...res.data.content]);
+      } else {
+        setFindFriendList([...res.data.content]);
+      }
+
       setPages({
         totalElements: res.data.totalElements,
         totalPages: res.data.totalPages,
@@ -89,7 +94,7 @@ const FindFriend = (props: IProps) => {
   const loadMoreData = async () => {
     setPage(page + 1);
     if (page <= pages.totalPages) {
-      await getFindFriend({ page: page, limit: 10 });
+      await getFindFriend({ page: page, limit: 10 }, true);
     }
   };
   return (
