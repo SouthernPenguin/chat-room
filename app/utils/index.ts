@@ -1,4 +1,4 @@
-import { __TOKEN__ } from './constant';
+import { __TOKEN__, AllowedImageTypes, AllowedOfficeTypes } from './constant';
 import moment from 'moment';
 
 /**
@@ -84,4 +84,18 @@ export const calcDate = (timestamp: string) => {
     const formattedDate = date.toLocaleDateString('en-US');
     return formattedDate;
   }
+};
+
+export const showFileType = (str: string) => {
+  const lastIndex = str.lastIndexOf('.');
+  const extension = str.substring(lastIndex + 1, str.length);
+  if (AllowedImageTypes.includes(extension)) {
+    return '[图片]';
+  }
+
+  if (AllowedOfficeTypes.includes(extension)) {
+    return extension + '[文件]';
+  }
+
+  return str;
 };

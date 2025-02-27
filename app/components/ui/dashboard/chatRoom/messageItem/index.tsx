@@ -2,7 +2,7 @@ import React from 'react';
 import './index.scss';
 import Link from 'next/link';
 import useUserStore from '@/app/store/user';
-import { calcDate } from '@/app/utils';
+import { calcDate, showFileType } from '@/app/utils';
 import { ChatType } from '@/app/types/enmu';
 import { IUser } from '@/app/types/user';
 import { IMessageList } from '@/app/types/notice';
@@ -35,7 +35,7 @@ const MessageItem = (props: IProps) => {
               </div>
             </div>
             <div className="relative dark:text-white text-ellipsis overflow-hidden ... pr-7">
-              <span>{props.userItem.newMessage}</span>
+              <span>{showFileType(props.userItem.newMessage)}</span>
               {/*未读统计*/}
               {/*<Badge count={5} className="right-0 top-0 absolute"></Badge>*/}
             </div>
@@ -66,7 +66,7 @@ const MessageItem = (props: IProps) => {
               </div>
             </div>
             <div className="relative dark:text-white text-ellipsis overflow-hidden ... pr-7">
-              <span>{props.userItem.newMessage}</span>
+              <span>{showFileType(props.userItem.newMessage)}</span>
               {/*未读统计*/}
               {/*<Badge count={5} className="right-0 top-0 absolute"></Badge>*/}
             </div>
