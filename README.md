@@ -20,6 +20,7 @@
 + 前端：NextJS14 + TypeScript + Zod + Zustand + NextAuth
 + UI：Antd + Tailwindcss
 + 图表：echarts
++ Node版本：v18以上
 
 ### 目前存在问题
 + 通知的时候，每个用户都会接收到  
